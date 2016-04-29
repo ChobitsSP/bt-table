@@ -317,24 +317,6 @@
         };
     });
 
-    tableModule.directive('showColumns', function () {
-        return {
-            replace: true,
-            restrict: 'E',
-            scope: { columns: '=' },
-            template: "<div class=\"keep-open btn-group\"uib-dropdown auto-close=\"outsideClick\"><button type=\"button\"class=\"btn btn-default dropdown-toggle\"uib-dropdown-toggle><i class=\"glyphicon glyphicon-th icon-th\"></i><span class=\"caret\"></span></button><ul class=\"dropdown-menu\"uib-dropdown-menu aria-labelledby=\"simple-dropdown\"><li><label><checkbox-all select-field=\"visible\"checkboxes=\"columns\"></checkbox-all>全选</label></li><li ng-repeat=\"col in columns\"><label><input type=\"checkbox\"ng-model=\"col.visible\">{{::col.title}}</label></li></ul></div>",
-            link: function (scope) {
-                if (angular.isArray(scope.columns)) {
-                    angular.forEach(scope.columns, function (col) {
-                        if (!col.hasOwnProperty('visible')) {
-                            col.visible = true
-                        }
-                    })
-                }
-            }
-        }
-    })
-
     //<bt-show-columns columns="columns"></bt-show-columns>
     tableModule.directive('btShowColumns', function () {
         return {
