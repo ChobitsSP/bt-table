@@ -414,14 +414,16 @@
                     })
                 }
 
-                scope.$watch('column.visible', function (newVal) {
-                    if (newVal === true) {
-                        angular.element(element[0]).css('display', '');
-                    }
-                    else if (newVal === false) {
-                        angular.element(element[0]).css('display', 'none');
-                    }
-                })
+                if (!!scope.column) {
+                    scope.$watch('column.visible', function (newVal) {
+                        if (newVal === true) {
+                            angular.element(element[0]).css('display', '');
+                        }
+                        else if (newVal === false) {
+                            angular.element(element[0]).css('display', 'none');
+                        }
+                    })
+                }
             }
         }
     })
