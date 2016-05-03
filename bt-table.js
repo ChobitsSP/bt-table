@@ -378,29 +378,34 @@
         return {
             restrict: 'A',
             scope: {
-                column: '=btCol',
+                column: '=?btCol',
+                field: '@?',
+                title: '@?',
                 sortable: '=?',
             },
-            template: '<div class="th-inner {{sort_class}}" ng-class="{ \'sortable both\' : is_sortable }">{{column.title}}</div><div class="fht-cell"></div>',
+            template: '<div class="th-inner {{sort_class}}" ng-class="{ sortable : is_sortable, both : is_sortable }">{{title}}</div><div class="fht-cell"></div>',
             link: function (scope, element, attr, ctrl) {
-                scope.is_sortable = !!scope.sortable && !!scope.column.field;
+                scope.title = scope.title || scope.column.title;
+                scope.field = scope.field || scope.column.field;
+
+                scope.is_sortable = !!scope.sortable && !!scope.field;
                 scope.sort_class = '';
 
                 if (scope.is_sortable) {
                     element.bind('click', function () {
-                        if (scope.sortable.sort_name === scope.column.field) {
+                        if (scope.sortable.sort_name === scope.field) {
                             scope.sortable.is_desc = !scope.sortable.is_desc;
                             scope.sort_class = scope.sortable.is_desc ? 'desc' : 'asc';
                         }
                         else {
                             scope.sortable.is_desc = false;
-                            scope.sortable.sort_name = scope.column.field;
+                            scope.sortable.sort_name = scope.field;
                         }
                         scope.$apply();
                     })
 
                     scope.$watch('sortable.sort_name', function (newVal) {
-                        if (scope.column.field !== newVal) {
+                        if (scope.field !== newVal) {
                             scope.sort_class = '';
                         }
                         else {
@@ -417,46 +422,6 @@
                         angular.element(element[0]).css('display', 'none');
                     }
                 })
-            }
-        }
-    })
-
-    tableModule.directive('btColSort', function () {
-        return {
-            scope: {
-                caption: '@?',
-                fieldName: '@?',
-                sortable: '=?',
-            },
-            restrict: 'A',
-            template: '<div class="th-inner {{sort_class}}" ng-class="{ \'sortable both\' : is_sortable }">{{caption}}</div><div class="fht-cell"></div>',
-            link: function (scope, element, attr, ctrl) {
-
-                scope.is_sortable = !!scope.sortable;
-                scope.sort_class = '';
-
-                if (scope.is_sortable) {
-                    element.bind('click', function () {
-                        if (scope.sortable.sort_name === scope.fieldName) {
-                            scope.sortable.is_desc = !scope.sortable.is_desc;
-                            scope.sort_class = scope.sortable.is_desc ? 'desc' : 'asc';
-                        }
-                        else {
-                            scope.sortable.is_desc = false;
-                            scope.sortable.sort_name = scope.fieldName;
-                        }
-                        scope.$apply();
-                    })
-
-                    scope.$watch('sortable.sort_name', function (newVal) {
-                        if (scope.fieldName !== newVal) {
-                            scope.sort_class = '';
-                        }
-                        else {
-                            scope.sort_class = scope.sortable.is_desc ? 'desc' : 'asc';
-                        }
-                    })
-                }
             }
         }
     })
