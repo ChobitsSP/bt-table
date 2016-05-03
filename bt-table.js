@@ -383,7 +383,7 @@
             },
             template: '<div class="th-inner {{sort_class}}" ng-class="{ \'sortable both\' : is_sortable }">{{column.title}}</div><div class="fht-cell"></div>',
             link: function (scope, element, attr, ctrl) {
-                scope.is_sortable = !!scope.sortable;
+                scope.is_sortable = !!scope.sortable && !!scope.column.field;
                 scope.sort_class = '';
 
                 if (scope.is_sortable) {
