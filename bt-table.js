@@ -344,6 +344,7 @@
                 item: '=btRow',
                 column: '=',
                 rowIndex: '@?',
+                rowCallback: '&?callback',
             },
             link: function (scope, element, attr, ctrl) {
                 var templateStr = '';
@@ -369,6 +370,12 @@
                         angular.element(element[0]).css('display', 'none');
                     }
                 })
+                
+                scope.callback = function () {
+                    if (angular.isFunction(scope.rowCallback)) {
+                        scope.rowCallback({ args: arguments })
+                    }
+                }                
             },
         };
     })
