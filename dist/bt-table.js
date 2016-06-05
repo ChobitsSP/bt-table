@@ -179,7 +179,7 @@
 	    })
 
 	    //<td ng-repeat="column in columns" bt-row="item" column="column"></td>
-	    tableModule.directive('btRow', function ($compile) {
+	    tableModule.directive('btRow', ['$compile', function ($compile) {
 	        return {
 	            restrict: 'A',
 	            scope: {
@@ -211,7 +211,7 @@
 	                }
 	            }
 	        }
-	    })
+	    }])
 
 	    tableModule.directive('btColSort', function () {
 	        return {
