@@ -18,7 +18,7 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname, // 输出文件的保存路径
+    path: __dirname + '/dist', // 输出文件的保存路径
     filename: 'bt-table.js' // 输出文件的名称
   }
 };
