@@ -20,6 +20,7 @@
               page-changed="pageChanged()"
               row-click="row_click(row, index)"
               cell-callback="edit(args, row, index)"
+              config="config"
               radio-item="radioItem"
               radio-class="danger"
               refresh="refresh()">
@@ -50,6 +51,11 @@
         var app = angular.module('app', ['ngAnimate', 'ui.bootstrap', 'bt-table'])
 
         app.controller('ctrl', function ($scope) {
+            
+            $scope.config = {
+                checkbox: true,
+            }
+            
             $scope.columns = [
                 {
                     title: 'id',
