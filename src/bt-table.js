@@ -25,7 +25,7 @@
                 cellCallback: '&?',
             },
             templateUrl: require('./bt-table.html'),
-            controller: function ($scope, $element) {
+            controller: ['$scope', function ($scope) {
 
                 $scope.config = angular.extend({
                     show_check: false,
@@ -53,7 +53,7 @@
                         $scope.cellCallback({ args: args, row: item, index: index })
                     }
                 }
-            },
+            }],
             link: function (scope, element, attr, ctrl) {
 
 
@@ -73,7 +73,7 @@
                 checkChange: '&?',
             },
             template: '<input type="checkbox" ng-model="master" ng-change="masterChange()">',
-            controller: function ($scope, $element) {
+            controller: ['$scope', '$element', function ($scope, $element) {
 
                 var select_field = $scope.selectField || 'isSelected';
 
@@ -115,9 +115,9 @@
                         $element.prop('indeterminate', true);
                     }
                 }, true);
-            }
-        };
-    });
+            }]
+        }
+    })
 
     //<td ng-repeat="column in columns" bt-row="item" column="column"></td>
     tableModule.directive('btRow', function ($compile) {
