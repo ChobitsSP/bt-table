@@ -622,7 +622,7 @@
 	            link: function (scope, element, attr, ctrl) {
 	                scope.sort_class = '';
 
-	                if (scope.column.sortable) {
+	                if (scope.column.sortable && scope.pager) {
 	                    scope.change_sort = function () {
 	                        if (scope.column.sortable === false) return
 
@@ -636,7 +636,7 @@
 	                        }
 	                    }
 
-	                    scope.$watch('sortable.sort_name', function (newVal) {
+	                    scope.$watch('pager.sort_name', function (newVal) {
 	                        if (scope.column.field !== newVal) {
 	                            scope.sort_class = '';
 	                        }
