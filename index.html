@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html ng-app="app">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
@@ -7,23 +8,22 @@
     <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
     <link href="http://cdn.bootcss.com/bootstrap-table/1.10.1/bootstrap-table.min.css" rel="stylesheet">
     <style>
-        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+        [ng\:cloak],
+        [ng-cloak],
+        [data-ng-cloak],
+        [x-ng-cloak],
+        .ng-cloak,
+        .x-ng-cloak,
+        .ng-hide {
             display: none !important;
         }
     </style>
 </head>
+
 <body ng-controller="ctrl" ng-cloak>
 
-    <bt-table columns="columns"
-              rows="items"
-              pager="pager"
-              page-changed="pageChanged()"
-              row-click="row_click(row, index)"
-              cell-callback="edit(args, row, index)"
-              config="config"
-              radio-item="radioItem"
-              radio-class="danger"
-              refresh="refresh()">
+    <bt-table columns="columns" rows="items" pager="pager" page-changed="pageChanged()" row-click="row_click(row, index)" cell-callback="edit(args, row, index)"
+        config="config" radio-item="radioItem" radio-class="danger" refresh="refresh()">
         <toolbar-left>
             <div class="form-inline">
                 <div class="btn-toolbar form-inline">
@@ -33,10 +33,15 @@
             </div>
         </toolbar-left>
         <toolbar-right>
-            <button class="btn btn-default" type="button" name="refresh" ng-click="refresh()" title="刷新">
-                <i class="glyphicon glyphicon-refresh icon-refresh"></i>
-            </button>
-            <bt-show-columns columns="columns"></bt-show-columns>
+            <div class="columns columns-right btn-group pull-right">
+                <button class="btn btn-default" type="button" name="refresh" ng-click="pageChanged()" title="刷新">
+                            <i class="glyphicon glyphicon-refresh icon-refresh"></i>
+                        </button>
+                <bt-show-columns columns="columns"></bt-show-columns>
+            </div>
+            <!--<div class="pull-right search">
+                <input class="form-control" type="text" ng-model="searchText" ng-change="text_filter(this.searchText)" placeholder="搜索" />
+            </div>-->
         </toolbar-right>
     </bt-table>
 
@@ -105,9 +110,9 @@
                 console.log('refresh')
             }
         })
-
     </script>
 
 
 </body>
+
 </html>
