@@ -60,8 +60,13 @@
                 }
             }],
             link: function (scope, element, attr, ctrl) {
-
-
+                if (angular.isArray(scope.columns)) {
+                    angular.forEach(scope.columns, function (col) {
+                        if (!col.hasOwnProperty('visible')) {
+                            col.visible = true
+                        }
+                    })
+                }
             }
         }
     })
