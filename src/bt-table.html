@@ -2,8 +2,8 @@
     <div class="fixed-table-toolbar">
         <div class="bars pull-left" ng-transclude="toolbarLeft">
         </div>
-        <div class="columns columns-right btn-group pull-right" ng-transclude="toolbarRight">
-        </div>
+        <ng-transclude ng-transclude-slot="toolbarRight">
+        </ng-transclude>
     </div>
     <div class="fixed-table-container" style="padding-bottom: 0px;">
         <div class="fixed-table-body">
