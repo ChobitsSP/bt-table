@@ -45,8 +45,8 @@
                     }
                 }
 
-                $scope.check_change = function (item) {
-                    $scope.$broadcast('check_change', item)
+                $scope.check_change = function () {
+                    $scope.$broadcast('check_change')
                 }
 
                 $scope.rowClass = function (item) {
@@ -98,11 +98,11 @@
                     }
                 }
 
-                $scope.$on('check_change', function (item) {
-                    check_change(item)
+                $scope.$on('check_change', function () {
+                    check_change()
                 })
 
-                function check_change(item) {
+                function check_change() {
                     var allSet = true, allClear = true;
                     angular.forEach($scope.checkboxes, function (cb, index) {
                         if (cb[select_field]) {
