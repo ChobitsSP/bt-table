@@ -89,7 +89,7 @@
 	            },
 	            templateUrl: __webpack_require__(2),
 	            controller: ['$scope', function ($scope) {
-	                
+
 	                $scope.$watch('[pager.sort_name,pager.is_desc]', function (newVal, oldVal) {
 	                    if (newVal == oldVal) return
 	                    if (angular.isFunction($scope.refresh)) {
@@ -98,9 +98,17 @@
 	                })
 
 	                $scope.row_click = function (item, index) {
+	                    if($scope.config.checkbox) {
+	                        item.$checked = !item.$checked
+	                        $scope.$broadcast('check_change', item)
+	                    }
 	                    if (angular.isFunction($scope.rowClick)) {
 	                        $scope.rowClick({ row: item, index: index })
 	                    }
+	                }
+
+	                $scope.check_change = function (item) {
+	                    $scope.$broadcast('check_change', item)
 	                }
 
 	                $scope.rowClass = function (item) {
@@ -152,7 +160,11 @@
 	                    }
 	                }
 
-	                $scope.$watch('checkboxes', function () {
+	                $scope.$on('check_change', function (item) {
+	                    check_change(item)
+	                })
+
+	                function check_change(item) {
 	                    var allSet = true, allClear = true;
 	                    angular.forEach($scope.checkboxes, function (cb, index) {
 	                        if (cb[select_field]) {
@@ -161,6 +173,7 @@
 	                            allSet = false;
 	                        }
 	                    });
+	                    
 	                    if (allSet) {
 	                        $scope.master = true;
 	                        $element.prop('indeterminate', false);
@@ -173,7 +186,11 @@
 	                        $scope.master = false;
 	                        $element.prop('indeterminate', true);
 	                    }
-	                }, true);
+	                }
+
+	                // $scope.$watch('checkboxes', function () {
+	                //     click_change()
+	                // }, true);
 	            }]
 	        }
 	    })
@@ -260,7 +277,7 @@
 /***/ function(module, exports) {
 
 	var path = 'src/bt-table.html';
-	var html = "<div class=\"bootstrap-table\">\r\n    <div class=\"fixed-table-toolbar\">\r\n        <div class=\"bars pull-left\" ng-transclude=\"toolbarLeft\">\r\n        </div>\r\n        <ng-transclude ng-transclude-slot=\"toolbarRight\">\r\n        </ng-transclude>\r\n    </div>\r\n    <div class=\"fixed-table-container\" style=\"padding-bottom: 0px;\">\r\n        <div class=\"fixed-table-body\">\r\n            <table class=\"table table-striped table-hover table-bordered dataTable no-footer\" ng-cloak>\r\n                <thead>\r\n                    <tr role=\"row\">\r\n                        <th class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <div class=\"th-inner\">\r\n                                <checkbox-all select-field=\"$checked\" checkboxes=\"items\" class=\"checkbox\"></checkbox-all>\r\n                            </div>\r\n                        </th>\r\n                        <th ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-col=\"col\" pager=\"pager\"></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody ng-show=\"!loading\" ng-cloak>\r\n                    <tr ng-repeat=\"item in items track by $index\" ng-class=\"rowClass(item, $index)\" ng-click=\"row_click(item, $index)\">\r\n                        <td class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <input type=\"checkbox\" ng-model=\"item.$checked\" ng-click=\"$event.stopPropagation();\" class=\"checkbox\" />\r\n                        </td>\r\n                        <td ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-row=\"item\" column=\"col\" callback=\"tdCallback(args, item, $parent.$index)\"></td>\r\n                    </tr>\r\n                    <tr class=\"no-records-found\" ng-show=\"items.length == 0\">\r\n                        <td colspan=\"999\" class=\"text-center\">没有找到匹配的记录</td>\r\n                    </tr>\r\n                </tbody>\r\n                <tbody ng-show=\"loading\">\r\n                    <tr>\r\n                        <td colspan=\"999\" class=\"text-center\">正在加载数据 ... </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n    <bt-pager total-items=\"pager.total_result\"\r\n              items-per-page=\"pager.page_size\"\r\n              ng-model=\"pager.page_no\"\r\n              page-changed=\"pageChanged()\">\r\n    </bt-pager>\r\n</div>";
+	var html = "<div class=\"bootstrap-table\">\r\n    <div class=\"fixed-table-toolbar\">\r\n        <div class=\"bars pull-left\" ng-transclude=\"toolbarLeft\">\r\n        </div>\r\n        <ng-transclude ng-transclude-slot=\"toolbarRight\">\r\n        </ng-transclude>\r\n    </div>\r\n    <div class=\"fixed-table-container\" style=\"padding-bottom: 0px;\">\r\n        <div class=\"fixed-table-body\">\r\n            <table class=\"table table-striped table-hover table-bordered dataTable no-footer\" ng-cloak>\r\n                <thead>\r\n                    <tr role=\"row\">\r\n                        <th class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <div class=\"th-inner\">\r\n                                <checkbox-all select-field=\"$checked\" checkboxes=\"items\" class=\"checkbox\"></checkbox-all>\r\n                            </div>\r\n                        </th>\r\n                        <th ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-col=\"col\" pager=\"pager\"></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody ng-show=\"!loading\" ng-cloak>\r\n                    <tr ng-repeat=\"item in items track by $index\" ng-class=\"rowClass(item, $index)\" ng-click=\"row_click(item, $index)\">\r\n                        <td class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <input type=\"checkbox\" ng-model=\"item.$checked\" ng-click=\"$event.stopPropagation();check_change(item)\" class=\"checkbox\" />\r\n                        </td>\r\n                        <td ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-row=\"item\" column=\"col\" callback=\"tdCallback(args, item, $parent.$index)\"></td>\r\n                    </tr>\r\n                    <tr class=\"no-records-found\" ng-show=\"items.length == 0\">\r\n                        <td colspan=\"999\" class=\"text-center\">没有找到匹配的记录</td>\r\n                    </tr>\r\n                </tbody>\r\n                <tbody ng-show=\"loading\">\r\n                    <tr>\r\n                        <td colspan=\"999\" class=\"text-center\">正在加载数据 ... </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n    <bt-pager total-items=\"pager.total_result\"\r\n              items-per-page=\"pager.page_size\"\r\n              ng-model=\"pager.page_no\"\r\n              page-changed=\"pageChanged()\">\r\n    </bt-pager>\r\n</div>";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 

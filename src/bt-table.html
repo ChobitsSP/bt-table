@@ -21,7 +21,7 @@
                 <tbody ng-show="!loading" ng-cloak>
                     <tr ng-repeat="item in items track by $index" ng-class="rowClass(item, $index)" ng-click="row_click(item, $index)">
                         <td class="bs-checkbox" ng-if="config.checkbox">
-                            <input type="checkbox" ng-model="item.$checked" ng-click="$event.stopPropagation();" class="checkbox" />
+                            <input type="checkbox" ng-model="item.$checked" ng-click="$event.stopPropagation();check_change(item)" class="checkbox" />
                         </td>
                         <td ng-repeat="col in columns" ng-show="col.visible" bt-row="item" column="col" callback="tdCallback(args, item, $parent.$index)"></td>
                     </tr>

@@ -27,7 +27,7 @@
             },
             templateUrl: require('./bt-table.html'),
             controller: ['$scope', function ($scope) {
-                
+
                 $scope.$watch('[pager.sort_name,pager.is_desc]', function (newVal, oldVal) {
                     if (newVal == oldVal) return
                     if (angular.isFunction($scope.refresh)) {
@@ -36,9 +36,17 @@
                 })
 
                 $scope.row_click = function (item, index) {
+                    if($scope.config.checkbox) {
+                        item.$checked = !item.$checked
+                        $scope.$broadcast('check_change', item)
+                    }
                     if (angular.isFunction($scope.rowClick)) {
                         $scope.rowClick({ row: item, index: index })
                     }
+                }
+
+                $scope.check_change = function (item) {
+                    $scope.$broadcast('check_change', item)
                 }
 
                 $scope.rowClass = function (item) {
@@ -90,7 +98,11 @@
                     }
                 }
 
-                $scope.$watch('checkboxes', function () {
+                $scope.$on('check_change', function (item) {
+                    check_change(item)
+                })
+
+                function check_change(item) {
                     var allSet = true, allClear = true;
                     angular.forEach($scope.checkboxes, function (cb, index) {
                         if (cb[select_field]) {
@@ -99,6 +111,7 @@
                             allSet = false;
                         }
                     });
+                    
                     if (allSet) {
                         $scope.master = true;
                         $element.prop('indeterminate', false);
@@ -111,7 +124,11 @@
                         $scope.master = false;
                         $element.prop('indeterminate', true);
                     }
-                }, true);
+                }
+
+                // $scope.$watch('checkboxes', function () {
+                //     click_change()
+                // }, true);
             }]
         }
     })
