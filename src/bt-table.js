@@ -27,7 +27,9 @@
             },
             templateUrl: require('./bt-table.html'),
             controller: ['$scope', function ($scope) {
-
+                
+                $scope.config = angular.extend({}, $scope.config)
+                
                 $scope.$watch('[pager.sort_name,pager.is_desc]', function (newVal, oldVal) {
                     if (newVal == oldVal) return
                     if (angular.isFunction($scope.refresh)) {

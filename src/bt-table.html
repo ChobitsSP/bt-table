@@ -10,7 +10,7 @@
             <table class="table table-striped table-hover table-bordered dataTable no-footer" ng-cloak>
                 <thead>
                     <tr role="row">
-                        <th class="bs-checkbox" style="text-align: center;" ng-if="config.checkbox">
+                        <th class="bs-checkbox" style="text-align: center; vertical-align: middle; width: 36px; " ng-if="config.checkbox">
                             <div class="th-inner">
                                 <checkbox-all select-field="$checked" checkboxes="items" class="checkbox"></checkbox-all>
                             </div>
@@ -37,9 +37,8 @@
             </table>
         </div>
     </div>
-    <bt-pager total-items="pager.total_result"
-              items-per-page="pager.page_size"
-              ng-model="pager.page_no"
-              page-changed="pageChanged()">
-    </bt-pager>
+    <div ng-if="pager">
+        <bt-pager total-items="pager.total_result" items-per-page="pager.page_size" ng-model="pager.page_no" page-changed="pageChanged()">
+        </bt-pager>
+    </div>
 </div>
