@@ -2,7 +2,7 @@
 <div class="fixed-table-pagination" style="display: block;">
     <div class="pull-left pagination-detail">
         <span class="pagination-info">显示第 {{(page - 1) * itemsPerPage + 1}} 到第 {{getCurrentCount()}} 条记录，总共 {{totalItems}} 条记录</span>
-        <span class="page-list">
+        <span class="page-list" ng-show="itemsPerPage > 0">
             每页显示
             <span uib-dropdown class="btn-group dropup">
                 <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
