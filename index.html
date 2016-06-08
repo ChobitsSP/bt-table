@@ -22,8 +22,12 @@
 
 <body ng-controller="ctrl" ng-cloak>
 
-    <bt-table columns="columns" rows="items" pager="pager" page-changed="pageChanged()" row-click="row_click(row, index)" cell-callback="edit(args, row, index)"
-        config="config" radio-item="radioItem" radio-class="danger" refresh="refresh()">
+    <bt-table columns="columns" rows="rows"
+              pager="pager" page-changed="pageChanged()"
+              row-click="row_click(row, index)" cell-callback="edit(args, row, index)"
+              config="config"
+              radio-item="radioItem" radio-class="danger"
+              refresh="refresh()">
         <toolbar-left>
             <div class="form-inline">
                 <div class="btn-toolbar form-inline">
@@ -35,13 +39,13 @@
         <toolbar-right>
             <div class="columns columns-right btn-group pull-right">
                 <button class="btn btn-default" type="button" name="refresh" ng-click="pageChanged()" title="刷新">
-                            <i class="glyphicon glyphicon-refresh icon-refresh"></i>
-                        </button>
+                    <i class="glyphicon glyphicon-refresh icon-refresh"></i>
+                </button>
                 <bt-show-columns columns="columns"></bt-show-columns>
             </div>
-            <!--<div class="pull-right search">
+            <div class="pull-right search">
                 <input class="form-control" type="text" ng-model="searchText" ng-change="text_filter(this.searchText)" placeholder="搜索" />
-            </div>-->
+            </div>
         </toolbar-right>
     </bt-table>
 
@@ -55,12 +59,12 @@
     <script>
         var app = angular.module('app', ['ngAnimate', 'ui.bootstrap', 'bt-table'])
 
-        app.controller('ctrl', function ($scope) {
-            
+        app.controller('ctrl', function ($scope, $filter) {
+
             $scope.config = {
                 checkbox: true,
             }
-            
+
             $scope.columns = [
                 {
                     title: 'id',
@@ -83,6 +87,8 @@
                 { id: 2, name: 'name2' },
                 { id: 3, name: 'name3' },
             ]
+
+            $scope.rows = $scope.items
 
             $scope.radioItem = $scope.items[1]
 
@@ -108,6 +114,10 @@
 
             $scope.refresh = function () {
                 console.log('refresh')
+            }
+
+            $scope.text_filter = function (searchText) {
+                $scope.rows = $filter('filter')($scope.items, searchText)
             }
         })
     </script>
