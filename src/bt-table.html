@@ -12,7 +12,7 @@
                     <tr role="row">
                         <th class="bs-checkbox" style="text-align: center; vertical-align: middle; width: 36px; " ng-if="config.checkbox">
                             <div class="th-inner">
-                                <checkbox-all select-field="$checked" checkboxes="items" class="checkbox"></checkbox-all>
+                                <checkbox-all select-field="$checked" checkboxes="items" check-change="all_check_change()" class="checkbox"></checkbox-all>
                             </div>
                         </th>
                         <th style="text-align: center;" ng-repeat="col in columns" ng-show="col.visible" bt-col="col" pager="pager"></th>

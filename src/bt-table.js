@@ -24,6 +24,7 @@
                 radioClass: '@?',
                 pageChanged: '&?',
                 cellCallback: '&?',
+                allCheckChange: '&?',
             },
             templateUrl: require('./bt-table.html'),
             controller: ['$scope', function ($scope) {
@@ -44,6 +45,12 @@
                     }
                     if (angular.isFunction($scope.rowClick)) {
                         $scope.rowClick({ row: item, index: index })
+                    }
+                }
+
+                $scope.all_check_change = function(){
+                    if (angular.isFunction($scope.allCheckChange)) {
+                        $scope.allCheckChange()
                     }
                 }
 
