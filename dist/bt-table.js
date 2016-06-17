@@ -108,10 +108,15 @@
 	            }
 	        };
 
+	        $scope.$on('resetView', function (event, data) {
+	            $scope.height = data.height;
+	            $scope.$apply();
+	        });
+
 	        $scope.getStyle = function () {
-	            if ($scope.config.height) {
+	            if ($scope.height) {
 	                return {
-	                    height: $scope.config.height
+	                    height: $scope.height
 	                };
 	            }
 	            return {};

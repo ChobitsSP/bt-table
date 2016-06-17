@@ -22,12 +22,8 @@
 
 <body ng-controller="ctrl" ng-cloak>
 
-    <bt-table columns="columns" rows="rows"
-              pager="pager" page-changed="pageChanged()"
-              row-click="row_click(row, index)" cell-callback="edit(args, row, index)"
-              config="config"
-              radio-item="radioItem" radio-class="danger"
-              refresh="refresh()">
+    <bt-table columns="columns" rows="rows" pager="pager" page-changed="pageChanged()" row-click="row_click(row, index)" cell-callback="edit(args, row, index)"
+        config="config" radio-item="radioItem" radio-class="danger" refresh="refresh()">
         <toolbar-left>
             <div class="form-inline">
                 <div class="btn-toolbar form-inline">
@@ -54,12 +50,18 @@
     <script src="http://cdn.bootcss.com/angular-ui-bootstrap/1.2.1/ui-bootstrap.min.js"></script>
     <script src="http://cdn.bootcss.com/angular-ui-bootstrap/1.2.1/ui-bootstrap-tpls.min.js"></script>
 
-    <script src="./dist/bt-table.min.js"></script>
+    <script src="./dist/bt-table.js"></script>
 
     <script>
         var app = angular.module('app', ['ngAnimate', 'ui.bootstrap', 'bt-table'])
 
-        app.controller('ctrl', function ($scope, $filter) {
+        app.controller('ctrl', function ($scope, $filter, $window) {
+
+            $window.addEventListener('resize', function() {
+                 $scope.$broadcast('resetView', {
+                     height: '100px'
+                 })
+            })
 
             $scope.config = {
                 checkbox: true,
@@ -86,6 +88,11 @@
                 { id: 1, name: 'name1' },
                 { id: 2, name: 'name2' },
                 { id: 3, name: 'name3' },
+                { id: 4, name: 'name3' },
+                { id: 5, name: 'name3' },
+                { id: 6, name: 'name3' },
+                { id: 7, name: 'name3' },
+                { id: 8, name: 'name3' },
             ]
 
             $scope.rows = $scope.items
