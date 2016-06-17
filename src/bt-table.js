@@ -45,6 +45,7 @@
         }
 
         $scope.$on('resetView', function (event, data) {
+            if ($scope.height == data.height) return
             $scope.height = data.height
             $scope.$apply()
         })
