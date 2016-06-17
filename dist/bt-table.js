@@ -108,16 +108,16 @@
 	            }
 	        };
 
-	        $scope.$on('resetView', function (event, data) {
-	            if ($scope.height == data.height) return;
-	            $scope.height = data.height;
-	            $scope.$apply();
-	        });
+	        // $scope.$on('resetView', function (event, data) {
+	        //     if ($scope.height == data.height) return
+	        //     $scope.height = data.height
+	        //     $scope.$apply()
+	        // })
 
 	        $scope.getStyle = function () {
-	            if ($scope.height) {
+	            if ($scope.config.height) {
 	                return {
-	                    height: $scope.height
+	                    height: $scope.config.height
 	                };
 	            }
 	            return {};

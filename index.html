@@ -55,10 +55,12 @@
     <script>
         var app = angular.module('app', ['ngAnimate', 'ui.bootstrap', 'bt-table'])
 
-        app.controller('ctrl', function ($scope, $filter, $window) {
+        app.controller('ctrl', function ($scope, $filter, $window, $timeout) {
 
-            $window.addEventListener('resize', function() {
-                 $scope.$broadcast('resetView', {
+        
+            $timeout(function() {
+
+    $scope.$broadcast('resetView', {
                      height: '100px'
                  })
             })
