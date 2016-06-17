@@ -44,19 +44,21 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+	'use strict';
+
 	/* injects from baggage-loader */
 
-	__webpack_require__(1)
-	__webpack_require__(3)
-	__webpack_require__(5)
-	__webpack_require__(7)
+	__webpack_require__(1);
+	__webpack_require__(3);
+	__webpack_require__(5);
+	__webpack_require__(7);
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+	'use strict';
+
 	/* injects from baggage-loader */
 	__webpack_require__(2);
 
@@ -64,7 +66,57 @@
 
 	(function (angular) {
 
-	    var tableModule = angular.module('bt-table', ['ui.bootstrap'])
+	    var tableModule = angular.module('bt-table', ['ui.bootstrap']);
+
+	    function table_controller($scope) {
+	        $scope.config = angular.extend({}, $scope.config);
+
+	        $scope.$watch('[pager.sort_name,pager.is_desc]', function (newVal, oldVal) {
+	            if (newVal == oldVal) return;
+	            if (angular.isFunction($scope.refresh)) {
+	                $scope.refresh();
+	            }
+	        });
+
+	        $scope.row_click = function (item, index) {
+	            if ($scope.config.checkbox) {
+	                item.$checked = !item.$checked;
+	                $scope.$broadcast('check_change', item);
+	            }
+	            if (angular.isFunction($scope.rowClick)) {
+	                $scope.rowClick({ row: item, index: index });
+	            }
+	        };
+
+	        $scope.all_check_change = function () {
+	            if (angular.isFunction($scope.allCheckChange)) {
+	                $scope.allCheckChange();
+	            }
+	        };
+
+	        $scope.check_change = function () {
+	            $scope.$broadcast('check_change');
+	        };
+
+	        $scope.rowClass = function (item) {
+	            return $scope.radioItem === item ? $scope.radioClass : '';
+	        };
+
+	        $scope.tdCallback = function (args, item, index) {
+	            if (angular.isFunction($scope.cellCallback)) {
+	                $scope.cellCallback({ args: args, row: item, index: index });
+	            }
+	        };
+
+	        $scope.getStyle = function () {
+	            if ($scope.config.height) {
+	                return {
+	                    height: $scope.config.height
+	                };
+	            }
+	            return {};
+	        };
+	    }
 
 	    tableModule.directive('btTable', function () {
 	        return {
@@ -72,7 +124,7 @@
 	            replace: true,
 	            transclude: {
 	                'toolbarLeft': '?toolbarLeft',
-	                'toolbarRight': '?toolbarRight',
+	                'toolbarRight': '?toolbarRight'
 	            },
 	            scope: {
 	                columns: '=',
@@ -86,54 +138,21 @@
 	                radioClass: '@?',
 	                pageChanged: '&?',
 	                cellCallback: '&?',
+	                allCheckChange: '&?'
 	            },
 	            templateUrl: __webpack_require__(2),
-	            controller: ['$scope', function ($scope) {
-	                
-	                $scope.config = angular.extend({}, $scope.config)
-	                
-	                $scope.$watch('[pager.sort_name,pager.is_desc]', function (newVal, oldVal) {
-	                    if (newVal == oldVal) return
-	                    if (angular.isFunction($scope.refresh)) {
-	                        $scope.refresh()
-	                    }
-	                })
-
-	                $scope.row_click = function (item, index) {
-	                    if($scope.config.checkbox) {
-	                        item.$checked = !item.$checked
-	                        $scope.$broadcast('check_change', item)
-	                    }
-	                    if (angular.isFunction($scope.rowClick)) {
-	                        $scope.rowClick({ row: item, index: index })
-	                    }
-	                }
-
-	                $scope.check_change = function () {
-	                    $scope.$broadcast('check_change')
-	                }
-
-	                $scope.rowClass = function (item) {
-	                    return $scope.radioItem === item ? $scope.radioClass : ''
-	                }
-
-	                $scope.tdCallback = function (args, item, index) {
-	                    if (angular.isFunction($scope.cellCallback)) {
-	                        $scope.cellCallback({ args: args, row: item, index: index })
-	                    }
-	                }
-	            }],
-	            link: function (scope, element, attr, ctrl) {
+	            controller: ['$scope', table_controller],
+	            link: function link(scope, element, attr, ctrl) {
 	                if (angular.isArray(scope.columns)) {
 	                    angular.forEach(scope.columns, function (col) {
 	                        if (!col.hasOwnProperty('visible')) {
-	                            col.visible = true
+	                            col.visible = true;
 	                        }
-	                    })
+	                    });
 	                }
 	            }
-	        }
-	    })
+	        };
+	    });
 
 	    //http://stackoverflow.com/questions/12648466/how-can-i-get-angular-js-checkboxes-with-select-unselect-all-functionality-and-i
 	    //<checkbox-all select-field="$checked" checkboxes="items" class="select-all-cb">
@@ -144,7 +163,7 @@
 	            scope: {
 	                checkboxes: '=',
 	                selectField: '@?',
-	                checkChange: '&?',
+	                checkChange: '&?'
 	            },
 	            template: '<input type="checkbox" ng-model="master" ng-change="masterChange()">',
 	            controller: ['$scope', '$element', function ($scope, $element) {
@@ -163,16 +182,17 @@
 	                    }
 
 	                    if (angular.isFunction($scope.checkChange)) {
-	                        $scope.checkChange()
+	                        $scope.checkChange();
 	                    }
-	                }
+	                };
 
 	                $scope.$on('check_change', function () {
-	                    check_change()
-	                })
+	                    check_change();
+	                });
 
 	                function check_change() {
-	                    var allSet = true, allClear = true;
+	                    var allSet = true,
+	                        allClear = true;
 	                    angular.forEach($scope.checkboxes, function (cb, index) {
 	                        if (cb[select_field]) {
 	                            allClear = false;
@@ -180,16 +200,14 @@
 	                            allSet = false;
 	                        }
 	                    });
-	                    
+
 	                    if (allSet) {
 	                        $scope.master = true;
 	                        $element.prop('indeterminate', false);
-	                    }
-	                    else if (allClear) {
+	                    } else if (allClear) {
 	                        $scope.master = false;
 	                        $element.prop('indeterminate', false);
-	                    }
-	                    else {
+	                    } else {
 	                        $scope.master = false;
 	                        $element.prop('indeterminate', true);
 	                    }
@@ -199,8 +217,8 @@
 	                //     click_change()
 	                // }, true);
 	            }]
-	        }
-	    })
+	        };
+	    });
 
 	    //<td ng-repeat="column in columns" bt-row="item" column="column"></td>
 	    tableModule.directive('btRow', ['$compile', function ($compile) {
@@ -210,43 +228,42 @@
 	                item: '=btRow',
 	                column: '=',
 	                rowIndex: '@?',
-	                rowCallback: '&?callback',
+	                rowCallback: '&?callback'
 	            },
-	            link: function (scope, element, attr, ctrl) {
+	            link: function link(scope, element, attr, ctrl) {
 	                var templateStr = '';
 
 	                var formatter = scope.column.formatter;
 
 	                if (angular.isFunction(formatter)) {
 	                    templateStr = formatter(scope.item, scope.rowIndex);
-	                }
-	                else {
+	                } else {
 	                    templateStr = formatter || '<span ng-bind="item.' + scope.column.field + '"></span>';
 	                }
-	                var div = angular.element(templateStr)
-	                $compile(div)(scope)
-	                var td = angular.element(element[0])
-	                td.append(div)
+	                var div = angular.element(templateStr);
+	                $compile(div)(scope);
+	                var td = angular.element(element[0]);
+	                td.append(div);
 
 	                scope.callback = function () {
 	                    if (angular.isFunction(scope.rowCallback)) {
-	                        scope.rowCallback({ args: arguments })
+	                        scope.rowCallback({ args: arguments });
 	                    }
-	                }
+	                };
 	            }
-	        }
-	    }])
+	        };
+	    }]);
 
 	    tableModule.directive('btColSort', function () {
 	        return {
 	            scope: {
 	                caption: '@?',
 	                fieldName: '@?',
-	                sortable: '=?',
+	                sortable: '=?'
 	            },
 	            restrict: 'A',
 	            template: '<div class="th-inner {{sort_class}}" ng-class="{ \'sortable both\' : is_sortable }">{{caption}}</div><div class="fht-cell"></div>',
-	            link: function (scope, element, attr, ctrl) {
+	            link: function link(scope, element, attr, ctrl) {
 
 	                scope.is_sortable = !!scope.sortable;
 	                scope.sort_class = '';
@@ -256,35 +273,32 @@
 	                        if (scope.sortable.sort_name === scope.fieldName) {
 	                            scope.sortable.is_desc = !scope.sortable.is_desc;
 	                            scope.sort_class = scope.sortable.is_desc ? 'desc' : 'asc';
-	                        }
-	                        else {
+	                        } else {
 	                            scope.sortable.is_desc = false;
 	                            scope.sortable.sort_name = scope.fieldName;
 	                        }
 	                        scope.$apply();
-	                    })
+	                    });
 
 	                    scope.$watch('sortable.sort_name', function (newVal) {
 	                        if (scope.fieldName !== newVal) {
 	                            scope.sort_class = '';
-	                        }
-	                        else {
+	                        } else {
 	                            scope.sort_class = scope.sortable.is_desc ? 'desc' : 'asc';
 	                        }
-	                    })
+	                    });
 	                }
 	            }
-	        }
-	    })
-
-	})(angular)
+	        };
+	    });
+	})(angular);
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
 	var path = 'src/bt-table.html';
-	var html = "<div class=\"bootstrap-table\">\r\n    <div class=\"fixed-table-toolbar\">\r\n        <div class=\"bars pull-left\" ng-transclude=\"toolbarLeft\">\r\n        </div>\r\n        <ng-transclude ng-transclude-slot=\"toolbarRight\">\r\n        </ng-transclude>\r\n    </div>\r\n    <div class=\"fixed-table-container\" style=\"padding-bottom: 0px;\">\r\n        <div class=\"fixed-table-body\">\r\n            <table class=\"table table-striped table-hover table-bordered dataTable no-footer\" ng-cloak>\r\n                <thead>\r\n                    <tr role=\"row\">\r\n                        <th class=\"bs-checkbox\" style=\"text-align: center; vertical-align: middle; width: 36px; \" ng-if=\"config.checkbox\">\r\n                            <div class=\"th-inner\">\r\n                                <checkbox-all select-field=\"$checked\" checkboxes=\"items\" class=\"checkbox\"></checkbox-all>\r\n                            </div>\r\n                        </th>\r\n                        <th style=\"text-align: center;\" ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-col=\"col\" pager=\"pager\"></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody ng-show=\"!loading\" ng-cloak>\r\n                    <tr ng-repeat=\"item in items track by $index\" ng-class=\"rowClass(item, $index)\" ng-click=\"row_click(item, $index)\">\r\n                        <td class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <input type=\"checkbox\" ng-model=\"item.$checked\" ng-click=\"$event.stopPropagation();check_change(item)\" class=\"checkbox\" />\r\n                        </td>\r\n                        <td ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-row=\"item\" column=\"col\" callback=\"tdCallback(args, item, $parent.$index)\"></td>\r\n                    </tr>\r\n                    <tr class=\"no-records-found\" ng-show=\"items.length == 0\">\r\n                        <td colspan=\"999\" class=\"text-center\">没有找到匹配的记录</td>\r\n                    </tr>\r\n                </tbody>\r\n                <tbody ng-show=\"loading\">\r\n                    <tr>\r\n                        <td colspan=\"999\" class=\"text-center\">正在加载数据 ... </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n    <div ng-if=\"pager\">\r\n        <bt-pager total-items=\"pager.total_result\" items-per-page=\"pager.page_size\" ng-model=\"pager.page_no\" page-changed=\"pageChanged()\">\r\n        </bt-pager>\r\n    </div>\r\n</div>";
+	var html = "<div class=\"bootstrap-table\">\r\n    <div class=\"fixed-table-toolbar\">\r\n        <div class=\"bars pull-left\" ng-transclude=\"toolbarLeft\">\r\n        </div>\r\n        <ng-transclude ng-transclude-slot=\"toolbarRight\">\r\n        </ng-transclude>\r\n    </div>\r\n    <div class=\"fixed-table-container\" ng-style=\"getStyle()\" style=\"padding-bottom: 0px;\">\r\n        <div class=\"fixed-table-body\">\r\n            <table class=\"table table-striped table-hover table-bordered dataTable no-footer\" ng-cloak>\r\n                <thead>\r\n                    <tr role=\"row\">\r\n                        <th class=\"bs-checkbox\" style=\"text-align: center; vertical-align: middle; width: 36px; \" ng-if=\"config.checkbox\">\r\n                            <div class=\"th-inner\">\r\n                                <checkbox-all select-field=\"$checked\" checkboxes=\"items\" check-change=\"all_check_change()\" class=\"checkbox\"></checkbox-all>\r\n                            </div>\r\n                        </th>\r\n                        <th style=\"text-align: center;\" ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-col=\"col\" pager=\"pager\"></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody ng-show=\"!loading\" ng-cloak>\r\n                    <tr ng-repeat=\"item in items track by $index\" ng-class=\"rowClass(item, $index)\" ng-click=\"row_click(item, $index)\">\r\n                        <td class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <input type=\"checkbox\" ng-model=\"item.$checked\" ng-click=\"$event.stopPropagation();check_change(item)\" class=\"checkbox\" />\r\n                        </td>\r\n                        <td ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-row=\"item\" column=\"col\" callback=\"tdCallback(args, item, $parent.$index)\"></td>\r\n                    </tr>\r\n                    <tr class=\"no-records-found\" ng-show=\"items.length == 0\">\r\n                        <td colspan=\"999\" class=\"text-center\">没有找到匹配的记录</td>\r\n                    </tr>\r\n                </tbody>\r\n                <tbody ng-show=\"loading\">\r\n                    <tr>\r\n                        <td colspan=\"999\" class=\"text-center\">正在加载数据 ... </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n    </div>\r\n    <div ng-if=\"pager\">\r\n        <bt-pager total-items=\"pager.total_result\" items-per-page=\"pager.page_size\" ng-model=\"pager.page_no\" page-changed=\"pageChanged()\">\r\n        </bt-pager>\r\n    </div>\r\n</div>";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
@@ -292,13 +306,14 @@
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+	'use strict';
+
 	/* injects from baggage-loader */
 	__webpack_require__(4);
 
 	(function (angular) {
 
-	    var tableModule = angular.module('bt-table')
+	    var tableModule = angular.module('bt-table');
 
 	    //<bt-show-columns columns="columns"></bt-show-columns>
 	    tableModule.directive('btShowColumns', function () {
@@ -309,7 +324,7 @@
 	                columns: '='
 	            },
 	            templateUrl: __webpack_require__(4),
-	            link: function (scope) {
+	            link: function link(scope) {
 	                // if (angular.isArray(scope.columns)) {
 	                //     angular.forEach(scope.columns, function (col) {
 	                //         if (!col.hasOwnProperty('visible')) {
@@ -318,10 +333,9 @@
 	                //     })
 	                // }
 	            }
-	        }
-	    })
-
-	})(angular)
+	        };
+	    });
+	})(angular);
 
 /***/ },
 /* 4 */
@@ -336,19 +350,20 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+	'use strict';
+
 	/* injects from baggage-loader */
 	__webpack_require__(6);
 
 	(function (angular) {
 
-	    var tableModule = angular.module('bt-table')
+	    var tableModule = angular.module('bt-table');
 
-	    tableModule
-	    .controller('btPagerController', ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
+	    tableModule.controller('btPagerController', ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
 	        var self = this,
-	            ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl
-	            setNumPages = $attrs.numPages ? $parse($attrs.numPages).assign : angular.noop;
+	            ngModelCtrl = { $setViewValue: angular.noop },
+	            // nullModelCtrl
+	        setNumPages = $attrs.numPages ? $parse($attrs.numPages).assign : angular.noop;
 
 	        this.init = function (ngModelCtrl_, config) {
 	            ngModelCtrl = ngModelCtrl_;
@@ -364,8 +379,8 @@
 	                //    $scope.totalPages = self.calculateTotalPages();
 	                //});
 	            } else {
-	                $scope.itemsPerPage = config.itemsPerPage;
-	            }
+	                    $scope.itemsPerPage = config.itemsPerPage;
+	                }
 	        };
 
 	        this.calculateTotalPages = function () {
@@ -429,8 +444,7 @@
 	        $scope.getCurrentCount = function () {
 	            return Math.min($scope.totalItems, $scope.page * $scope.itemsPerPage);
 	        };
-	    }])
-	    .constant('btPagerConfig', {
+	    }]).constant('btPagerConfig', {
 	        itemsPerPage: 10,
 	        boundaryLinks: false,
 	        directionLinks: true,
@@ -439,10 +453,9 @@
 	        nextText: 'Next',
 	        lastText: 'Last',
 	        numDisplayEntries: 6, //连续分页主体部分分页条目数
-	        numEdgeEntries: 2,   //两侧首尾分页条目数
+	        numEdgeEntries: 2, //两侧首尾分页条目数
 	        rotate: true
-	    })
-	    .directive('btPager', ['$parse', 'btPagerConfig', function ($parse, paginationConfig) {
+	    }).directive('btPager', ['$parse', 'btPagerConfig', function ($parse, paginationConfig) {
 	        return {
 	            restrict: 'EA',
 	            scope: {
@@ -458,8 +471,9 @@
 	            controller: 'btPagerController',
 	            templateUrl: __webpack_require__(6),
 	            replace: true,
-	            link: function (scope, element, attrs, ctrls) {
-	                var paginationCtrl = ctrls[0], ngModelCtrl = ctrls[1];
+	            link: function link(scope, element, attrs, ctrls) {
+	                var paginationCtrl = ctrls[0],
+	                    ngModelCtrl = ctrls[1];
 
 	                if (!ngModelCtrl) {
 	                    return; // do nothing if no ng-model
@@ -489,7 +503,7 @@
 	                        number: number,
 	                        text: text,
 	                        active: isActive,
-	                        disabled: text == '...',
+	                        disabled: text == '...'
 	                    };
 	                }
 
@@ -503,7 +517,7 @@
 	                    if (interval[0] > 0 && num_edge_entries > 0) {
 	                        var end = Math.min(num_edge_entries, interval[0]);
 	                        for (var i = 0; i < end; i++) {
-	                            var page = makePage(i + 1, i + 1, (i + 1) === currentPage);
+	                            var page = makePage(i + 1, i + 1, i + 1 === currentPage);
 	                            ret.push(page);
 	                        }
 	                        if (num_edge_entries < interval[0]) {
@@ -513,7 +527,7 @@
 	                    }
 	                    // Generate interval links
 	                    for (var i = interval[0]; i < interval[1]; i++) {
-	                        var page = makePage(i + 1, i + 1, (i + 1) === currentPage);
+	                        var page = makePage(i + 1, i + 1, i + 1 === currentPage);
 	                        ret.push(page);
 	                    }
 	                    // Generate ending points
@@ -524,7 +538,7 @@
 	                        }
 	                        var begin = Math.max(np - num_edge_entries, interval[1]);
 	                        for (var i = begin; i < np; i++) {
-	                            var page = makePage(i + 1, i + 1, (i + 1) === currentPage);
+	                            var page = makePage(i + 1, i + 1, i + 1 === currentPage);
 	                            ret.push(page);
 	                        }
 	                    }
@@ -536,8 +550,9 @@
 	                    var pages = [];
 
 	                    // Default page limits
-	                    var startPage = 1, endPage = totalPages;
-	                    var isMaxSized = (angular.isDefined(maxSize) && maxSize < totalPages);
+	                    var startPage = 1,
+	                        endPage = totalPages;
+	                    var isMaxSized = angular.isDefined(maxSize) && maxSize < totalPages;
 
 	                    // recompute if maxSize
 	                    if (isMaxSized) {
@@ -553,7 +568,7 @@
 	                            }
 	                        } else {
 	                            // Visible pages are paginated with maxSize
-	                            startPage = ((Math.ceil(currentPage / maxSize) - 1) * maxSize) + 1;
+	                            startPage = (Math.ceil(currentPage / maxSize) - 1) * maxSize + 1;
 
 	                            // Adjust last page if limit is exceeded
 	                            endPage = Math.min(startPage + maxSize - 1, totalPages);
@@ -605,12 +620,11 @@
 	                    if (scope.page > 0 && scope.page <= scope.totalPages) {
 	                        scope.pages = getPages2(scope.page, scope.totalPages);
 	                    }
-	                }
+	                };
 	            }
-	        }
-	    }])
-
-	})(angular)
+	        };
+	    }]);
+	})(angular);
 
 /***/ },
 /* 6 */
@@ -625,7 +639,8 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+	'use strict';
+
 	/* injects from baggage-loader */
 	__webpack_require__(8);
 
@@ -633,47 +648,44 @@
 
 	(function (angular) {
 
-	    var tableModule = angular.module('bt-table')
+	    var tableModule = angular.module('bt-table');
 
 	    tableModule.directive('btCol', function () {
 	        return {
 	            restrict: 'A',
 	            scope: {
 	                column: '=btCol',
-	                pager: '=?',
+	                pager: '=?'
 	            },
 	            templateUrl: __webpack_require__(8),
-	            link: function (scope, element, attr, ctrl) {
+	            link: function link(scope, element, attr, ctrl) {
 	                scope.sort_class = '';
 
 	                if (scope.column.sortable && scope.pager) {
 	                    scope.change_sort = function () {
-	                        if (scope.column.sortable === false) return
+	                        if (scope.column.sortable === false) return;
 
 	                        if (scope.pager.sort_name === scope.column.field) {
-	                            scope.pager.is_desc = !scope.pager.is_desc
-	                            scope.sort_class = scope.pager.is_desc ? 'desc' : 'asc'
+	                            scope.pager.is_desc = !scope.pager.is_desc;
+	                            scope.sort_class = scope.pager.is_desc ? 'desc' : 'asc';
+	                        } else {
+	                            scope.pager.is_desc = false;
+	                            scope.pager.sort_name = scope.column.field;
 	                        }
-	                        else {
-	                            scope.pager.is_desc = false
-	                            scope.pager.sort_name = scope.column.field
-	                        }
-	                    }
+	                    };
 
 	                    scope.$watch('pager.sort_name', function (newVal) {
 	                        if (scope.column.field !== newVal) {
 	                            scope.sort_class = '';
-	                        }
-	                        else {
+	                        } else {
 	                            scope.sort_class = scope.pager.is_desc ? 'desc' : 'asc';
 	                        }
-	                    })
+	                    });
 	                }
 	            }
-	        }
-	    })
-
-	})(angular)
+	        };
+	    });
+	})(angular);
 
 /***/ },
 /* 8 */

@@ -5,15 +5,23 @@ module.exports = {
   entry: './app.js',
   module: {
     preLoaders: [
-      { 
-        test: /\.js$/, 
-        loader: 'baggage?[file].html&[file].css' 
+      {
+        test: /\.js$/,
+        loader: 'baggage?[file].html&[file].css'
       }
     ],
     loaders: [
       {
         test: /\.html$/,
         loader: 'ngtemplate?relativeTo=' + __dirname + '/!html'
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel', // 'babel-loader' is also a legal name to reference
+        query: {
+          presets: ['es2015']
+        }
       }
     ]
   },

@@ -4,6 +4,56 @@
 
     var tableModule = angular.module('bt-table', ['ui.bootstrap'])
 
+    function table_controller($scope) {
+        $scope.config = angular.extend({}, $scope.config)
+
+        $scope.$watch('[pager.sort_name,pager.is_desc]', function (newVal, oldVal) {
+            if (newVal == oldVal) return
+            if (angular.isFunction($scope.refresh)) {
+                $scope.refresh()
+            }
+        })
+
+        $scope.row_click = function (item, index) {
+            if ($scope.config.checkbox) {
+                item.$checked = !item.$checked
+                $scope.$broadcast('check_change', item)
+            }
+            if (angular.isFunction($scope.rowClick)) {
+                $scope.rowClick({ row: item, index: index })
+            }
+        }
+
+        $scope.all_check_change = function () {
+            if (angular.isFunction($scope.allCheckChange)) {
+                $scope.allCheckChange()
+            }
+        }
+
+        $scope.check_change = function () {
+            $scope.$broadcast('check_change')
+        }
+
+        $scope.rowClass = function (item) {
+            return $scope.radioItem === item ? $scope.radioClass : ''
+        }
+
+        $scope.tdCallback = function (args, item, index) {
+            if (angular.isFunction($scope.cellCallback)) {
+                $scope.cellCallback({ args: args, row: item, index: index })
+            }
+        }
+
+        $scope.getStyle = function () {
+            if ($scope.config.height) {
+                return {
+                    height: $scope.config.height
+                }
+            }
+            return {}
+        }
+    }
+
     tableModule.directive('btTable', function () {
         return {
             restrict: 'E',
@@ -27,47 +77,7 @@
                 allCheckChange: '&?',
             },
             templateUrl: require('./bt-table.html'),
-            controller: ['$scope', function ($scope) {
-                
-                $scope.config = angular.extend({}, $scope.config)
-                
-                $scope.$watch('[pager.sort_name,pager.is_desc]', function (newVal, oldVal) {
-                    if (newVal == oldVal) return
-                    if (angular.isFunction($scope.refresh)) {
-                        $scope.refresh()
-                    }
-                })
-
-                $scope.row_click = function (item, index) {
-                    if($scope.config.checkbox) {
-                        item.$checked = !item.$checked
-                        $scope.$broadcast('check_change', item)
-                    }
-                    if (angular.isFunction($scope.rowClick)) {
-                        $scope.rowClick({ row: item, index: index })
-                    }
-                }
-
-                $scope.all_check_change = function(){
-                    if (angular.isFunction($scope.allCheckChange)) {
-                        $scope.allCheckChange()
-                    }
-                }
-
-                $scope.check_change = function () {
-                    $scope.$broadcast('check_change')
-                }
-
-                $scope.rowClass = function (item) {
-                    return $scope.radioItem === item ? $scope.radioClass : ''
-                }
-
-                $scope.tdCallback = function (args, item, index) {
-                    if (angular.isFunction($scope.cellCallback)) {
-                        $scope.cellCallback({ args: args, row: item, index: index })
-                    }
-                }
-            }],
+            controller: ['$scope', table_controller],
             link: function (scope, element, attr, ctrl) {
                 if (angular.isArray(scope.columns)) {
                     angular.forEach(scope.columns, function (col) {
@@ -125,7 +135,7 @@
                             allSet = false;
                         }
                     });
-                    
+
                     if (allSet) {
                         $scope.master = true;
                         $element.prop('indeterminate', false);

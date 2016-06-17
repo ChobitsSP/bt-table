@@ -5,7 +5,7 @@
         <ng-transclude ng-transclude-slot="toolbarRight">
         </ng-transclude>
     </div>
-    <div class="fixed-table-container" style="padding-bottom: 0px;">
+    <div class="fixed-table-container" ng-style="getStyle()" style="padding-bottom: 0px;">
         <div class="fixed-table-body">
             <table class="table table-striped table-hover table-bordered dataTable no-footer" ng-cloak>
                 <thead>
