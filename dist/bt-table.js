@@ -94,8 +94,11 @@
 	            }
 	        };
 
-	        $scope.check_change = function () {
+	        $scope.check_change = function (item) {
 	            $scope.$broadcast('check_change');
+	            if (angular.isFunction($scope.checkChange)) {
+	                $scope.checkChange({ row: item });
+	            }
 	        };
 
 	        $scope.rowClass = function (item) {
@@ -144,6 +147,7 @@
 	                radioClass: '@?',
 	                pageChanged: '&?',
 	                cellCallback: '&?',
+	                checkChange: '&?',
 	                allCheckChange: '&?'
 	            },
 	            templateUrl: __webpack_require__(2),
