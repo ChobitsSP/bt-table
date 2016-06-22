@@ -38,7 +38,7 @@
         }
 
         $scope.rowClass = function (item) {
-            return $scope.radioItem === item ? $scope.radioClass : ''
+            return item.$row_class || ''
         }
 
         $scope.tdCallback = function (args, item, index) {
@@ -67,10 +67,7 @@
         return {
             restrict: 'E',
             replace: true,
-            transclude: {
-                'toolbarLeft': '?toolbarLeft',
-                'toolbarRight': '?toolbarRight',
-            },
+            transclude: true,
             scope: {
                 columns: '=',
                 items: '=rows',
@@ -79,8 +76,6 @@
                 loading: '=?',
                 refresh: '&?',
                 rowClick: '&?',
-                radioItem: '=?',
-                radioClass: '@?',
                 pageChanged: '&?',
                 cellCallback: '&?',
                 checkChange:'&?',
@@ -96,8 +91,6 @@
                         }
                     })
                 }
-
-
             }
         }
     })
