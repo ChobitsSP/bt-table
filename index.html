@@ -17,8 +17,10 @@
         .ng-hide {
             display: none !important;
         }
+        
         .bs-radio {
-            text-align: center; width: 10px;
+            text-align: center;
+            width: 10px;
         }
     </style>
 </head>
@@ -26,13 +28,9 @@
 <body ng-controller="ctrl" ng-cloak>
     <bt-table columns="columns" rows="rows" pager="pager" page-changed="pageChanged()" row-click="row_click(row, index)" cell-callback="edit(args, row, index)"
         config="config" refresh="refresh()">
-        <div class="bs-bars pull-left">
-            <div class="form-inline">
-                <div class="btn-toolbar form-inline">
-                    <a class="btn btn-sm btn-success" ng-click="new()">new</a>
-                    <a class="btn btn-sm btn-danger" ng-click="remove()">remove</a>
-                </div>
-            </div>
+        <div class="bars pull-left">
+            <a class="btn btn-sm btn-success" ng-click="new()">new</a>
+            <a class="btn btn-sm btn-danger" ng-click="remove()">remove</a>
         </div>
         <div class="columns columns-right btn-group pull-right">
             <button class="btn btn-default" type="button" name="refresh" ng-click="pageChanged()" title="刷新">
