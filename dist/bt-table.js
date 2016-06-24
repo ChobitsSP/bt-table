@@ -417,28 +417,34 @@
 	        $scope.getText = function (key) {
 	            return $scope[key + 'Text'] || self.config[key + 'Text'];
 	        };
-	        $scope.noPrevious = function () {
-	            return $scope.page === 1;
-	        };
-	        $scope.noNext = function () {
-	            return $scope.page === $scope.totalPages;
-	        };
 
-	        $scope.$watch('itemsPerPage', function () {
+	        //page_size changed
+	        $scope.$watch('itemsPerPage', function (newValue, oldValue) {
+	            //if(newValue === oldValue) return
 	            $scope.totalPages = self.calculateTotalPages();
 	        });
 
-	        $scope.$watch('totalItems', function () {
+	        //total_result changed
+	        $scope.$watch('totalItems', function (newValue, oldValue) {
 	            $scope.totalPages = self.calculateTotalPages();
 	        });
 
-	        $scope.$watch('totalPages', function (value) {
+	        var change_state = 0;
+
+	        $scope.$watch('totalPages', function (value, oldValue) {
 	            setNumPages($scope.$parent, value); // Readonly variable
 
 	            if ($scope.page > value) {
 	                $scope.selectPage(value);
 	            } else if (angular.isFunction(ngModelCtrl.$render)) {
 	                ngModelCtrl.$render();
+
+	                if (change_state === 0) {
+	                    change_state = 1;
+	                } else if (change_state === 1) {
+	                    change_state = 2;
+	                    return;
+	                }
 
 	                if (angular.isFunction($scope.pageChanged)) {
 	                    $scope.pageChanged();
@@ -636,7 +642,7 @@
 /***/ function(module, exports) {
 
 	var path = 'src/bt-pager.html';
-	var html = "\r\n<div class=\"fixed-table-pagination\" style=\"display: block;\">\r\n    <div class=\"pull-left pagination-detail\">\r\n        <span class=\"pagination-info\">显示第 {{(page - 1) * itemsPerPage + 1}} 到第 {{getCurrentCount()}} 条记录，总共 {{totalItems}} 条记录</span>\r\n        <span class=\"page-list\" ng-show=\"totalItems > itemsPerPage\">\r\n            每页显示\r\n            <span uib-dropdown class=\"btn-group dropup\">\r\n                <button type=\"button\" class=\"btn btn-default dropdown-toggle\" uib-dropdown-toggle>\r\n                    <span class=\"page-size\">{{itemsPerPage}}</span>\r\n                    <span class=\"caret\"></span>\r\n                </button>\r\n                <ul class=\"dropdown-menu\" uib-dropdown-menu>\r\n                    <li ng-class=\"{ active: itemsPerPage == size }\" ng-repeat=\"size in [10,25,50,100] track by $index\">\r\n                        <a ng-click=\"setPageSize(size)\">{{::size}}</a>\r\n                    </li>\r\n                </ul>\r\n            </span> 条记录\r\n        </span>\r\n    </div>\r\n    <div class=\"pull-right pagination\" ng-show=\"totalItems > itemsPerPage\">\r\n        <ul class=\"pagination\">\r\n            <li class=\"page-pre\" ng-if=\"!noPrevious()\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page - 1)\">‹</a>\r\n            </li>\r\n            <li class=\"page-number\" ng-repeat=\"page in pages track by $index\" ng-class=\"{active: page.active, disabled: page.disabled}\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page.number)\">{{page.text}}</a>\r\n            </li>\r\n            <li class=\"page-nex\" ng-if=\"!noNext()\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page + 1)\">›</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n";
+	var html = "\r\n<div class=\"fixed-table-pagination\" style=\"display: block;\">\r\n    <div class=\"pull-left pagination-detail\">\r\n        <span class=\"pagination-info\">显示第 {{(page - 1) * itemsPerPage + 1}} 到第 {{getCurrentCount()}} 条记录，总共 {{totalItems}} 条记录</span>\r\n        <span class=\"page-list\" ng-show=\"totalItems > itemsPerPage\">\r\n            每页显示\r\n            <span uib-dropdown class=\"btn-group dropup\">\r\n                <button type=\"button\" class=\"btn btn-default dropdown-toggle\" uib-dropdown-toggle>\r\n                    <span class=\"page-size\">{{itemsPerPage}}</span>\r\n                    <span class=\"caret\"></span>\r\n                </button>\r\n                <ul class=\"dropdown-menu\" uib-dropdown-menu>\r\n                    <li ng-class=\"{ active: itemsPerPage == size }\" ng-repeat=\"size in [10,25,50,100] track by $index\">\r\n                        <a ng-click=\"setPageSize(size)\">{{::size}}</a>\r\n                    </li>\r\n                </ul>\r\n            </span> 条记录\r\n        </span>\r\n    </div>\r\n    <div class=\"pull-right pagination\" ng-show=\"totalItems > itemsPerPage\">\r\n        <ul class=\"pagination\">\r\n            <li class=\"page-pre\" ng-if=\"page === 1\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page - 1)\">‹</a>\r\n            </li>\r\n            <li class=\"page-number\" ng-repeat=\"page in pages track by $index\" ng-class=\"{active: page.active, disabled: page.disabled}\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page.number)\">{{page.text}}</a>\r\n            </li>\r\n            <li class=\"page-nex\" ng-if=\"page === totalPages\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page + 1)\">›</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 

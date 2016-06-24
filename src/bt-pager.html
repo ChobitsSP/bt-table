@@ -19,13 +19,13 @@
     </div>
     <div class="pull-right pagination" ng-show="totalItems > itemsPerPage">
         <ul class="pagination">
-            <li class="page-pre" ng-if="!noPrevious()">
+            <li class="page-pre" ng-if="page === 1">
                 <a style="cursor:pointer;" ng-click="selectPage(page - 1)">‹</a>
             </li>
             <li class="page-number" ng-repeat="page in pages track by $index" ng-class="{active: page.active, disabled: page.disabled}">
                 <a style="cursor:pointer;" ng-click="selectPage(page.number)">{{page.text}}</a>
             </li>
-            <li class="page-nex" ng-if="!noNext()">
+            <li class="page-nex" ng-if="page === totalPages">
                 <a style="cursor:pointer;" ng-click="selectPage(page + 1)">›</a>
             </li>
         </ul>
