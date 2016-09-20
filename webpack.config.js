@@ -2,7 +2,7 @@
 var path = require('path')
 
 module.exports = {
-    entry: './app.js',
+    entry: './src/main.js',
     resolve: {
         extensions: ['', '.js'],
         alias: {

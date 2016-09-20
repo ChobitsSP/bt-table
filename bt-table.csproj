@@ -53,12 +53,12 @@
     <Content Include="dist\bt-table.min.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\main.js" />
     <Content Include="src\utils\PagerHelper.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
-    <Content Include="app.js" />
     <Content Include="gulpfile.js" />
     <Content Include="index.html" />
     <Content Include="src\components\bt-col.html" />
