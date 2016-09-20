@@ -53,6 +53,7 @@
     <Content Include="dist\bt-table.min.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\utils\PagerHelper.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitattributes" />
@@ -60,14 +61,14 @@
     <Content Include="app.js" />
     <Content Include="gulpfile.js" />
     <Content Include="index.html" />
-    <Content Include="src\bt-col.html" />
-    <Content Include="src\bt-col.js" />
-    <Content Include="src\bt-dropdown.html" />
-    <Content Include="src\bt-dropdown.js" />
-    <Content Include="src\bt-pager.html" />
-    <Content Include="src\bt-pager.js" />
-    <Content Include="src\bt-show-columns.html" />
-    <Content Include="src\bt-show-columns.js" />
+    <Content Include="src\components\bt-col.html" />
+    <Content Include="src\components\bt-col.js" />
+    <Content Include="src\components\bt-dropdown.html" />
+    <Content Include="src\components\bt-dropdown.js" />
+    <Content Include="src\components\bt-pager.html" />
+    <Content Include="src\components\bt-pager.js" />
+    <Content Include="src\components\bt-show-columns.html" />
+    <Content Include="src\components\bt-show-columns.js" />
     <Content Include="src\bt-table-tpl.html" />
     <Content Include="src\bt-table.html" />
     <Content Include="src\bt-table.js" />
