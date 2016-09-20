@@ -1,4 +1,4 @@
-﻿<div class="bootstrap-table">
+<div class="bootstrap-table">
     <div class="fixed-table-toolbar" ng-transclude>
     </div>
     <div class="fixed-table-container">
@@ -11,18 +11,18 @@
                                 <checkbox-all select-field="$checked" checkboxes="items" check-change="all_check_change()" class="checkbox"></checkbox-all>
                             </div>
                         </th>
-                        <th ng-class="col.th_class" ng-repeat="col in columns" ng-show="col.visible" bt-col="col" pager="pager"></th>
+                        <th style="text-align: center;" ng-repeat="col in columns" ng-show="col.visible" bt-col="col" pager="pager"></th>
                     </tr>
                 </thead>
                 <tbody ng-show="!loading" ng-cloak>
-                    <tr ng-repeat="item in items track by $index" ng-class="{{item.$row_class}}" ng-click="row_click(item, $index)">
+                    <tr ng-repeat="item in items track by $index" ng-class="rowClass(item, $index)" ng-click="row_click(item, $index)">
                         <td class="bs-checkbox" ng-if="config.checkbox">
                             <input type="checkbox" ng-model="item.$checked" ng-click="$event.stopPropagation();check_change(item)" class="checkbox" />
                         </td>
-                        <td ng-class="col.td_class" ng-repeat="col in columns" ng-show="col.visible" bt-row="item" column="col" callback="tdCallback(args, item, $parent.$index)"></td>
+                        <td ng-repeat="col in columns" ng-show="col.visible" bt-row="item" column="col" callback="tdCallback(args, item, $parent.$index)"></td>
                     </tr>
                     <tr class="no-records-found" ng-show="items.length == 0">
-                        <td colspan="999" class="text-center">没有记录</td>
+                        <td colspan="999" class="text-center">没有找到匹配的记录</td>
                     </tr>
                 </tbody>
                 <tbody ng-show="loading">

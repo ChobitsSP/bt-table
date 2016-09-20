@@ -52,6 +52,7 @@
 	__webpack_require__(3);
 	__webpack_require__(5);
 	__webpack_require__(7);
+	__webpack_require__(9);
 
 /***/ },
 /* 1 */
@@ -66,7 +67,7 @@
 
 	(function (angular) {
 
-	    var tableModule = angular.module('bt-table', ['ui.bootstrap']);
+	    var tableModule = angular.module('bt-table', []);
 
 	    function table_controller($scope) {
 	        $scope.config = angular.extend({}, $scope.config);
@@ -303,7 +304,7 @@
 /***/ function(module, exports) {
 
 	var path = 'src/bt-table.html';
-	var html = "<div class=\"bootstrap-table\">\r\n    <div class=\"fixed-table-toolbar\" ng-transclude>\r\n    </div>\r\n    <div class=\"fixed-table-container\">\r\n        <div class=\"fixed-table-body\">\r\n            <table class=\"table table-striped table-hover table-bordered dataTable no-footer\" ng-cloak>\r\n                <thead>\r\n                    <tr role=\"row\">\r\n                        <th class=\"bs-checkbox\" style=\"text-align: center; vertical-align: middle; width: 36px; \" ng-if=\"config.checkbox\">\r\n                            <div class=\"th-inner\">\r\n                                <checkbox-all select-field=\"$checked\" checkboxes=\"items\" check-change=\"all_check_change()\" class=\"checkbox\"></checkbox-all>\r\n                            </div>\r\n                        </th>\r\n                        <th ng-class=\"col.th_class\" ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-col=\"col\" pager=\"pager\"></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody ng-show=\"!loading\" ng-cloak>\r\n                    <tr ng-repeat=\"item in items track by $index\" ng-class=\"rowClass(item, $index)\" ng-click=\"row_click(item, $index)\">\r\n                        <td class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <input type=\"checkbox\" ng-model=\"item.$checked\" ng-click=\"$event.stopPropagation();check_change(item)\" class=\"checkbox\" />\r\n                        </td>\r\n                        <td ng-class=\"col.td_class\" ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-row=\"item\" column=\"col\" callback=\"tdCallback(args, item, $parent.$index)\"></td>\r\n                    </tr>\r\n                    <tr class=\"no-records-found\" ng-show=\"items.length == 0\">\r\n                        <td colspan=\"999\" class=\"text-center\">没有记录</td>\r\n                    </tr>\r\n                </tbody>\r\n                <tbody ng-show=\"loading\">\r\n                    <tr>\r\n                        <td colspan=\"999\" class=\"text-center\">正在加载数据 ... </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n        <div ng-if=\"pager\">\r\n            <bt-pager total-items=\"pager.total_result\" items-per-page=\"pager.page_size\" ng-model=\"pager.page_no\" page-changed=\"pageChanged()\">\r\n            </bt-pager>\r\n        </div>\r\n    </div>\r\n</div>";
+	var html = "<div class=\"bootstrap-table\">\r\n    <div class=\"fixed-table-toolbar\" ng-transclude>\r\n    </div>\r\n    <div class=\"fixed-table-container\">\r\n        <div class=\"fixed-table-body\">\r\n            <table class=\"table table-striped table-hover table-bordered dataTable no-footer\" ng-cloak>\r\n                <thead>\r\n                    <tr role=\"row\">\r\n                        <th class=\"bs-checkbox\" style=\"text-align: center; vertical-align: middle; width: 36px; \" ng-if=\"config.checkbox\">\r\n                            <div class=\"th-inner\">\r\n                                <checkbox-all select-field=\"$checked\" checkboxes=\"items\" check-change=\"all_check_change()\" class=\"checkbox\"></checkbox-all>\r\n                            </div>\r\n                        </th>\r\n                        <th ng-class=\"col.th_class\" ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-col=\"col\" pager=\"pager\"></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody ng-show=\"!loading\" ng-cloak>\r\n                    <tr ng-repeat=\"item in items track by $index\" ng-class=\"{{item.$row_class}}\" ng-click=\"row_click(item, $index)\">\r\n                        <td class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <input type=\"checkbox\" ng-model=\"item.$checked\" ng-click=\"$event.stopPropagation();check_change(item)\" class=\"checkbox\" />\r\n                        </td>\r\n                        <td ng-class=\"col.td_class\" ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-row=\"item\" column=\"col\" callback=\"tdCallback(args, item, $parent.$index)\"></td>\r\n                    </tr>\r\n                    <tr class=\"no-records-found\" ng-show=\"items.length == 0\">\r\n                        <td colspan=\"999\" class=\"text-center\">没有记录</td>\r\n                    </tr>\r\n                </tbody>\r\n                <tbody ng-show=\"loading\">\r\n                    <tr>\r\n                        <td colspan=\"999\" class=\"text-center\">正在加载数据 ... </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n        <div ng-if=\"pager\">\r\n            <bt-pager total-items=\"pager.total_result\" items-per-page=\"pager.page_size\" ng-model=\"pager.page_no\" page-changed=\"pageChanged()\">\r\n            </bt-pager>\r\n        </div>\r\n    </div>\r\n</div>";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
@@ -360,6 +361,50 @@
 	/* injects from baggage-loader */
 	__webpack_require__(6);
 
+	'use strict';
+
+	(function (angular) {
+
+	    var tableModule = angular.module('bt-table');
+
+	    tableModule.directive('btDropdown', function () {
+	        return {
+	            restrict: 'E',
+	            scope: {
+	                btnTxt: '=btnTxt',
+	                isOpen: '=?'
+	            },
+	            transclude: true,
+	            templateUrl: __webpack_require__(6),
+	            link: function link(scope, element, attr, ctrl) {
+	                //// WAI-ARIA
+	                //element.attr({ 'aria-haspopup': true, 'aria-expanded': false });
+	                //scope.$watch('isOpen', function (isOpen) {
+	                //    element.attr('aria-expanded', !!isOpen);
+	                //});
+	            }
+	        };
+	    });
+	})(angular);
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	var path = 'src/bt-dropdown.html';
+	var html = "<span class=\"btn-group dropup dropdown\" ng-class=\"{ 'open': isOpen }\">\r\n    <button type=\"button\" ng-click=\"isOpen=!isOpen\" class=\"btn btn-default dropdown-toggle\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n        <span>{{ btnTxt }}</span>\r\n        <span class=\"caret\"></span>\r\n    </button>\r\n    <ul class=\"dropdown-menu\" ng-show=\"isOpen\" ng-transclude>\r\n    </ul>\r\n</span>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/* injects from baggage-loader */
+	__webpack_require__(8);
+
 	(function (angular) {
 
 	    var tableModule = angular.module('bt-table');
@@ -409,6 +454,7 @@
 	        };
 
 	        $scope.setPageSize = function (size) {
+	            $scope.isOpen = false;
 	            if ($scope.itemsPerPage !== size && size > 0) {
 	                $scope.itemsPerPage = size;
 	            }
@@ -480,9 +526,11 @@
 	            },
 	            require: ['btPager', '?ngModel'],
 	            controller: 'btPagerController',
-	            templateUrl: __webpack_require__(6),
+	            templateUrl: __webpack_require__(8),
 	            replace: true,
 	            link: function link(scope, element, attrs, ctrls) {
+	                scope.isOpen = false;
+
 	                var paginationCtrl = ctrls[0],
 	                    ngModelCtrl = ctrls[1];
 
@@ -638,22 +686,22 @@
 	})(angular);
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports) {
 
 	var path = 'src/bt-pager.html';
-	var html = "\r\n<div class=\"fixed-table-pagination\" style=\"display: block;\">\r\n    <div class=\"pull-left pagination-detail\">\r\n        <span class=\"pagination-info\">显示第 {{(page - 1) * itemsPerPage + 1}} 到第 {{getCurrentCount()}} 条记录，总共 {{totalItems}} 条记录</span>\r\n        <span class=\"page-list\" ng-show=\"totalItems > itemsPerPage\">\r\n            每页显示\r\n            <span uib-dropdown class=\"btn-group dropup\">\r\n                <button type=\"button\" class=\"btn btn-default dropdown-toggle\" uib-dropdown-toggle>\r\n                    <span class=\"page-size\">{{itemsPerPage}}</span>\r\n                    <span class=\"caret\"></span>\r\n                </button>\r\n                <ul class=\"dropdown-menu\" uib-dropdown-menu>\r\n                    <li ng-class=\"{ active: itemsPerPage == size }\" ng-repeat=\"size in [10,25,50,100] track by $index\">\r\n                        <a ng-click=\"setPageSize(size)\">{{::size}}</a>\r\n                    </li>\r\n                </ul>\r\n            </span> 条记录\r\n        </span>\r\n    </div>\r\n    <div class=\"pull-right pagination\" ng-show=\"totalItems > itemsPerPage\">\r\n        <ul class=\"pagination\">\r\n            <li class=\"page-pre\" ng-if=\"page === 1\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page - 1)\">‹</a>\r\n            </li>\r\n            <li class=\"page-number\" ng-repeat=\"page in pages track by $index\" ng-class=\"{active: page.active, disabled: page.disabled}\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page.number)\">{{page.text}}</a>\r\n            </li>\r\n            <li class=\"page-nex\" ng-if=\"page === totalPages\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page + 1)\">›</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n";
+	var html = "\r\n<div class=\"fixed-table-pagination\" style=\"display: block;\">\r\n    <div class=\"pull-left pagination-detail\">\r\n        <span class=\"pagination-info\">显示第 {{(page - 1) * itemsPerPage + 1}} 到第 {{getCurrentCount()}} 条记录，总共 {{totalItems}} 条记录</span>\r\n        <span class=\"page-list\" ng-show=\"totalItems > itemsPerPage\">\r\n            每页显示\r\n            <bt-dropdown btn-txt=\"itemsPerPage\" is-open=\"isOpen\">\r\n                <li ng-class=\"{ active: itemsPerPage == size }\" ng-repeat=\"size in [10,25,50,100] track by $index\">\r\n                    <a ng-click=\"setPageSize(size)\">{{::size}}</a>\r\n                </li>\r\n            </bt-dropdown> 条记录\r\n        </span>\r\n    </div>\r\n    <div class=\"pull-right pagination\" ng-show=\"totalItems > itemsPerPage\">\r\n        <ul class=\"pagination\">\r\n            <li class=\"page-pre\" ng-if=\"page === 1\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page - 1)\">‹</a>\r\n            </li>\r\n            <li class=\"page-number\" ng-repeat=\"page in pages track by $index\" ng-class=\"{active: page.active, disabled: page.disabled}\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page.number)\">{{page.text}}</a>\r\n            </li>\r\n            <li class=\"page-nex\" ng-if=\"page === totalPages\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page + 1)\">›</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	/* injects from baggage-loader */
-	__webpack_require__(8);
+	__webpack_require__(10);
 
 	'use strict';
 
@@ -668,7 +716,7 @@
 	                column: '=btCol',
 	                pager: '=?'
 	            },
-	            templateUrl: __webpack_require__(8),
+	            templateUrl: __webpack_require__(10),
 	            link: function link(scope, element, attr, ctrl) {
 	                scope.sort_class = '';
 
@@ -699,7 +747,7 @@
 	})(angular);
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports) {
 
 	var path = 'src/bt-col.html';

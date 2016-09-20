@@ -2,7 +2,7 @@
 
 (function (angular) {
 
-    var tableModule = angular.module('bt-table', ['ui.bootstrap'])
+    var tableModule = angular.module('bt-table', [])
 
     function table_controller($scope) {
         $scope.config = angular.extend({}, $scope.config)

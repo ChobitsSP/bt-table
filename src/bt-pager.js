@@ -47,6 +47,7 @@
             };
 
             $scope.setPageSize = function (size) {
+                $scope.isOpen = false;
                 if ($scope.itemsPerPage !== size && size > 0) {
                     $scope.itemsPerPage = size;
                 }
@@ -124,6 +125,8 @@
                 templateUrl: require('./bt-pager.html'),
                 replace: true,
                 link: function (scope, element, attrs, ctrls) {
+                    scope.isOpen = false;
+                    
                     var paginationCtrl = ctrls[0], ngModelCtrl = ctrls[1];
 
                     if (!ngModelCtrl) {

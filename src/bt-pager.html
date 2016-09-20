@@ -4,17 +4,11 @@
         <span class="pagination-info">显示第 {{(page - 1) * itemsPerPage + 1}} 到第 {{getCurrentCount()}} 条记录，总共 {{totalItems}} 条记录</span>
         <span class="page-list" ng-show="totalItems > itemsPerPage">
             每页显示
-            <span uib-dropdown class="btn-group dropup">
-                <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-                    <span class="page-size">{{itemsPerPage}}</span>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" uib-dropdown-menu>
-                    <li ng-class="{ active: itemsPerPage == size }" ng-repeat="size in [10,25,50,100] track by $index">
-                        <a ng-click="setPageSize(size)">{{::size}}</a>
-                    </li>
-                </ul>
-            </span> 条记录
+            <bt-dropdown btn-txt="itemsPerPage" is-open="isOpen">
+                <li ng-class="{ active: itemsPerPage == size }" ng-repeat="size in [10,25,50,100] track by $index">
+                    <a ng-click="setPageSize(size)">{{::size}}</a>
+                </li>
+            </bt-dropdown> 条记录
         </span>
     </div>
     <div class="pull-right pagination" ng-show="totalItems > itemsPerPage">
