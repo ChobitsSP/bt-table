@@ -57,6 +57,8 @@
     <Content Include="src\components\btColSort.js" />
     <Content Include="src\components\btTable.html" />
     <Content Include="src\components\btTable.js" />
+    <Content Include="src\directives\btRow.js" />
+    <Content Include="src\directives\checkboxAll.js" />
     <Content Include="src\main.js" />
     <Content Include="src\utils\PagerHelper.js" />
   </ItemGroup>
@@ -73,9 +75,6 @@
     <Content Include="src\components\btPager.js" />
     <Content Include="src\components\btShowColumns.html" />
     <Content Include="src\components\btShowColumns.js" />
-    <Content Include="src\bt-table-tpl.html" />
-    <Content Include="src\bt-table.html" />
-    <Content Include="src\bt-table.js" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
