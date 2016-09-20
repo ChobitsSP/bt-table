@@ -55,6 +55,8 @@
     <Content Include="README.md" />
     <Content Include="src\components\btColSort.html" />
     <Content Include="src\components\btColSort.js" />
+    <Content Include="src\components\btTable.html" />
+    <Content Include="src\components\btTable.js" />
     <Content Include="src\main.js" />
     <Content Include="src\utils\PagerHelper.js" />
   </ItemGroup>

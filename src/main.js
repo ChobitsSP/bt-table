@@ -2,6 +2,8 @@
 
 let app = angular.module('bt-table')
 
+app.directive('btTable', require('components/btTable'))
+
 app.directive('btCol', require('components/btCol'))
 app.directive('btPager', require('components/btPager'))
 app.directive('btDropdown', require('components/btDropdown'))
