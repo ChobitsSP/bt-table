@@ -121,7 +121,7 @@ module.exports = ['$parse', function ($parse) {
         },
         require: ['btPager', '?ngModel'],
         controller: controller,
-        templateUrl: require('./bt-pager.html'),
+        templateUrl: require('./btPager.html'),
         replace: true,
         link: function (scope, element, attrs, ctrls) {
             scope.isOpen = false;

@@ -67,8 +67,8 @@
     <Content Include="src\components\bt-col.js" />
     <Content Include="src\components\bt-dropdown.html" />
     <Content Include="src\components\bt-dropdown.js" />
-    <Content Include="src\components\bt-pager.html" />
-    <Content Include="src\components\bt-pager.js" />
+    <Content Include="src\components\btPager.html" />
+    <Content Include="src\components\btPager.js" />
     <Content Include="src\components\bt-show-columns.html" />
     <Content Include="src\components\bt-show-columns.js" />
     <Content Include="src\bt-table-tpl.html" />
