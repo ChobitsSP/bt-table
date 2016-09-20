@@ -53,6 +53,8 @@
     <Content Include="dist\bt-table.min.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\components\btColSort.html" />
+    <Content Include="src\components\btColSort.js" />
     <Content Include="src\main.js" />
     <Content Include="src\utils\PagerHelper.js" />
   </ItemGroup>

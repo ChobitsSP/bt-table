@@ -11,3 +11,5 @@ app.directive('btCol', btCol)
 app.directive('btPager', btPager)
 app.directive('btDropdown', btDropdown)
 app.directive('btShowColumns', btShowColumns)
+
+app.directive('btColSort', require('components/btColSort'))

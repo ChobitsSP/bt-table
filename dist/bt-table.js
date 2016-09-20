@@ -75,6 +75,8 @@
 	app.directive('btDropdown', _btDropdown2.default);
 	app.directive('btShowColumns', _btShowColumns2.default);
 
+	app.directive('btColSort', __webpack_require__(12));
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -733,6 +735,66 @@
 
 	var path = 'src/bt-table.html';
 	var html = "<div class=\"bootstrap-table\">\r\n    <div class=\"fixed-table-toolbar\" ng-transclude>\r\n    </div>\r\n    <div class=\"fixed-table-container\">\r\n        <div class=\"fixed-table-body\">\r\n            <table class=\"table table-striped table-hover table-bordered dataTable no-footer\" ng-cloak>\r\n                <thead>\r\n                    <tr role=\"row\">\r\n                        <th class=\"bs-checkbox\" style=\"text-align: center; vertical-align: middle; width: 36px; \" ng-if=\"config.checkbox\">\r\n                            <div class=\"th-inner\">\r\n                                <checkbox-all select-field=\"$checked\" checkboxes=\"items\" check-change=\"all_check_change()\" class=\"checkbox\"></checkbox-all>\r\n                            </div>\r\n                        </th>\r\n                        <th ng-class=\"col.th_class\" ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-col=\"col\" pager=\"pager\"></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody ng-show=\"!loading\" ng-cloak>\r\n                    <tr ng-repeat=\"item in items track by $index\" ng-class=\"{{item.$row_class}}\" ng-click=\"row_click(item, $index)\">\r\n                        <td class=\"bs-checkbox\" ng-if=\"config.checkbox\">\r\n                            <input type=\"checkbox\" ng-model=\"item.$checked\" ng-click=\"$event.stopPropagation();check_change(item)\" class=\"checkbox\" />\r\n                        </td>\r\n                        <td ng-class=\"col.td_class\" ng-repeat=\"col in columns\" ng-show=\"col.visible\" bt-row=\"item\" column=\"col\" callback=\"tdCallback(args, item, $parent.$index)\"></td>\r\n                    </tr>\r\n                    <tr class=\"no-records-found\" ng-show=\"items.length == 0\">\r\n                        <td colspan=\"999\" class=\"text-center\">没有记录</td>\r\n                    </tr>\r\n                </tbody>\r\n                <tbody ng-show=\"loading\">\r\n                    <tr>\r\n                        <td colspan=\"999\" class=\"text-center\">正在加载数据 ... </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n        </div>\r\n        <div ng-if=\"pager\">\r\n            <bt-pager total-items=\"pager.total_result\" items-per-page=\"pager.page_size\" ng-model=\"pager.page_no\" page-changed=\"pageChanged()\">\r\n            </bt-pager>\r\n        </div>\r\n    </div>\r\n</div>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function () {
+	    return {
+	        scope: {
+	            caption: '@?',
+	            fieldName: '@?',
+	            sortable: '=?'
+	        },
+	        restrict: 'A',
+	        templateUrl: __webpack_require__(13),
+	        link: function link(scope, element, attr, ctrl) {
+
+	            scope.is_sortable = !!scope.sortable;
+	            scope.sort_class = '';
+
+	            if (scope.is_sortable) {
+	                element.bind('click', function () {
+	                    if (scope.sortable.sort_name === scope.fieldName) {
+	                        scope.sortable.is_desc = !scope.sortable.is_desc;
+	                        scope.sort_class = scope.sortable.is_desc ? 'desc' : 'asc';
+	                    } else {
+	                        scope.sortable.is_desc = false;
+	                        scope.sortable.sort_name = scope.fieldName;
+	                    }
+	                    scope.$apply();
+	                });
+
+	                scope.$watch('sortable.sort_name', function (newVal) {
+	                    if (scope.fieldName !== newVal) {
+	                        scope.sort_class = '';
+	                    } else {
+	                        scope.sort_class = scope.sortable.is_desc ? 'desc' : 'asc';
+	                    }
+	                });
+	            }
+	        }
+	    };
+	};
+
+	/* injects from baggage-loader */
+	__webpack_require__(13);
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	var path = 'src/components/btColSort.html';
+	var html = "<div class=\"th-inner {{sort_class}}\" ng-class=\"{ 'sortable both' : is_sortable }\">\r\n    {{caption}}\r\n</div>\r\n<div class=\"fht-cell\"></div>";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
