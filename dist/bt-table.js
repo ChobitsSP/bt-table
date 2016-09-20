@@ -46,30 +46,17 @@
 
 	'use strict';
 
-	var _btCol = __webpack_require__(1);
-
-	var _btCol2 = _interopRequireDefault(_btCol);
-
-	var _btDropdown = __webpack_require__(3);
-
-	var _btDropdown2 = _interopRequireDefault(_btDropdown);
-
-	var _btShowColumns = __webpack_require__(5);
-
-	var _btShowColumns2 = _interopRequireDefault(_btShowColumns);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	__webpack_require__(7);
 	/* injects from baggage-loader */
+
+	__webpack_require__(1);
 
 	var app = angular.module('bt-table');
 
-	app.directive('btCol', _btCol2.default);
-	app.directive('btDropdown', _btDropdown2.default);
-	app.directive('btShowColumns', _btShowColumns2.default);
+	app.directive('btCol', __webpack_require__(3));
+	app.directive('btPager', __webpack_require__(5));
+	app.directive('btDropdown', __webpack_require__(8));
+	app.directive('btShowColumns', __webpack_require__(10));
 
-	app.directive('btPager', __webpack_require__(9));
 	app.directive('btColSort', __webpack_require__(12));
 
 /***/ },
@@ -78,149 +65,8 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function () {
-	    return {
-	        restrict: 'A',
-	        scope: {
-	            column: '=btCol',
-	            pager: '=?'
-	        },
-	        templateUrl: __webpack_require__(2),
-	        link: function link(scope, element, attr, ctrl) {
-	            scope.sort_class = '';
-
-	            if (scope.column.sortable && scope.pager) {
-	                scope.change_sort = function () {
-	                    if (scope.column.sortable === false) return;
-
-	                    if (scope.pager.sort_name === scope.column.field) {
-	                        scope.pager.is_desc = !scope.pager.is_desc;
-	                        scope.sort_class = scope.pager.is_desc ? 'desc' : 'asc';
-	                    } else {
-	                        scope.pager.is_desc = false;
-	                        scope.pager.sort_name = scope.column.field;
-	                    }
-	                };
-
-	                scope.$watch('pager.sort_name', function (newVal) {
-	                    if (scope.column.field !== newVal) {
-	                        scope.sort_class = '';
-	                    } else {
-	                        scope.sort_class = scope.pager.is_desc ? 'desc' : 'asc';
-	                    }
-	                });
-	            }
-	        }
-	    };
-	};
-
 	/* injects from baggage-loader */
 	__webpack_require__(2);
-
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	var path = 'src/components/bt-col.html';
-	var html = "<div class=\"th-inner {{sort_class}}\" ng-click=\"change_sort()\" ng-class=\"{ 'sortable both' : column.sortable }\">\r\n    {{column.title}}\r\n</div>\r\n<div class=\"fht-cell\">\r\n</div>";
-	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
-	module.exports = path;
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function () {
-	    return {
-	        restrict: 'E',
-	        scope: {
-	            btnTxt: '=btnTxt',
-	            isOpen: '=?'
-	        },
-	        transclude: true,
-	        templateUrl: __webpack_require__(4),
-	        link: function link(scope, element, attr, ctrl) {
-	            //// WAI-ARIA
-	            //element.attr({ 'aria-haspopup': true, 'aria-expanded': false });
-	            //scope.$watch('isOpen', function (isOpen) {
-	            //    element.attr('aria-expanded', !!isOpen);
-	            //});
-	        }
-	    };
-	};
-
-	/* injects from baggage-loader */
-	__webpack_require__(4);
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-	var path = 'src/components/bt-dropdown.html';
-	var html = "<span class=\"btn-group dropup dropdown\" ng-class=\"{ 'open': isOpen }\">\r\n    <button type=\"button\" ng-click=\"isOpen=!isOpen\" class=\"btn btn-default dropdown-toggle\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n        <span>{{ btnTxt }}</span>\r\n        <span class=\"caret\"></span>\r\n    </button>\r\n    <ul class=\"dropdown-menu\" ng-show=\"isOpen\" ng-transclude>\r\n    </ul>\r\n</span>";
-	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
-	module.exports = path;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function () {
-	    return {
-	        restrict: 'E',
-	        replace: true,
-	        scope: {
-	            columns: '='
-	        },
-	        templateUrl: __webpack_require__(6),
-	        link: function link(scope) {
-	            // if (angular.isArray(scope.columns)) {
-	            //     angular.forEach(scope.columns, function (col) {
-	            //         if (!col.hasOwnProperty('visible')) {
-	            //             col.visible = true
-	            //         }
-	            //     })
-	            // }
-	        }
-	    };
-	};
-
-	/* injects from baggage-loader */
-	__webpack_require__(6);
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	var path = 'src/components/bt-show-columns.html';
-	var html = "<div class=\"keep-open btn-group\" uib-dropdown auto-close=\"outsideClick\">\r\n    <button type=\"button\" class=\"btn btn-default dropdown-toggle\" uib-dropdown-toggle>\r\n        <i class=\"glyphicon glyphicon-th icon-th\">\r\n        </i>\r\n        <span class=\"caret\">\r\n        </span>\r\n    </button>\r\n    <ul class=\"dropdown-menu\" uib-dropdown-menu aria-labelledby=\"simple-dropdown\">\r\n        <li ng-repeat=\"col in columns\">\r\n            <label>\r\n                <input type=\"checkbox\" ng-model=\"col.visible\">\r\n                {{col.title}}\r\n            </label>\r\n        </li>\r\n    </ul>\r\n</div>";
-	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
-	module.exports = path;
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	/* injects from baggage-loader */
-	__webpack_require__(8);
 
 	'use strict';
 
@@ -305,7 +151,7 @@
 	                checkChange: '&?',
 	                allCheckChange: '&?'
 	            },
-	            templateUrl: __webpack_require__(8),
+	            templateUrl: __webpack_require__(2),
 	            controller: ['$scope', table_controller],
 	            link: function link(scope, element, attr, ctrl) {
 	                if (angular.isArray(scope.columns)) {
@@ -421,7 +267,7 @@
 	})(angular);
 
 /***/ },
-/* 8 */
+/* 2 */
 /***/ function(module, exports) {
 
 	var path = 'src/bt-table.html';
@@ -430,19 +276,73 @@
 	module.exports = path;
 
 /***/ },
-/* 9 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _PagerHelper = __webpack_require__(10);
+	/* injects from baggage-loader */
+	__webpack_require__(4);
+
+	module.exports = function () {
+	    return {
+	        restrict: 'A',
+	        scope: {
+	            column: '=btCol',
+	            pager: '=?'
+	        },
+	        templateUrl: __webpack_require__(4),
+	        link: function link(scope, element, attr, ctrl) {
+	            scope.sort_class = '';
+
+	            if (scope.column.sortable && scope.pager) {
+	                scope.change_sort = function () {
+	                    if (scope.column.sortable === false) return;
+
+	                    if (scope.pager.sort_name === scope.column.field) {
+	                        scope.pager.is_desc = !scope.pager.is_desc;
+	                        scope.sort_class = scope.pager.is_desc ? 'desc' : 'asc';
+	                    } else {
+	                        scope.pager.is_desc = false;
+	                        scope.pager.sort_name = scope.column.field;
+	                    }
+	                };
+
+	                scope.$watch('pager.sort_name', function (newVal) {
+	                    if (scope.column.field !== newVal) {
+	                        scope.sort_class = '';
+	                    } else {
+	                        scope.sort_class = scope.pager.is_desc ? 'desc' : 'asc';
+	                    }
+	                });
+	            }
+	        }
+	    };
+	};
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	var path = 'src/components/btCol.html';
+	var html = "<div class=\"th-inner {{sort_class}}\" ng-click=\"change_sort()\" ng-class=\"{ 'sortable both' : column.sortable }\">\r\n    {{column.title}}\r\n</div>\r\n<div class=\"fht-cell\">\r\n</div>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _PagerHelper = __webpack_require__(6);
 
 	var _PagerHelper2 = _interopRequireDefault(_PagerHelper);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/* injects from baggage-loader */
-	__webpack_require__(11);
+	__webpack_require__(7);
 
 	var paginationConfig = {
 	    itemsPerPage: 10,
@@ -565,7 +465,7 @@
 	        },
 	        require: ['btPager', '?ngModel'],
 	        controller: controller,
-	        templateUrl: __webpack_require__(11),
+	        templateUrl: __webpack_require__(7),
 	        replace: true,
 	        link: function link(scope, element, attrs, ctrls) {
 	            scope.isOpen = false;
@@ -609,7 +509,7 @@
 	}];
 
 /***/ },
-/* 10 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -687,11 +587,86 @@
 	module.exports = PagerHelper;
 
 /***/ },
-/* 11 */
+/* 7 */
 /***/ function(module, exports) {
 
 	var path = 'src/components/btPager.html';
 	var html = "\r\n<div class=\"fixed-table-pagination\" style=\"display: block;\">\r\n    <div class=\"pull-left pagination-detail\">\r\n        <span class=\"pagination-info\">显示第 {{(page - 1) * itemsPerPage + 1}} 到第 {{getCurrentCount()}} 条记录，总共 {{totalItems}} 条记录</span>\r\n        <span class=\"page-list\" ng-show=\"totalItems > itemsPerPage\">\r\n            每页显示\r\n            <bt-dropdown btn-txt=\"itemsPerPage\" is-open=\"isOpen\">\r\n                <li ng-class=\"{ active: itemsPerPage == size }\" ng-repeat=\"size in [10,25,50,100] track by $index\">\r\n                    <a ng-click=\"setPageSize(size)\">{{::size}}</a>\r\n                </li>\r\n            </bt-dropdown> 条记录\r\n        </span>\r\n    </div>\r\n    <div class=\"pull-right pagination\" ng-show=\"totalItems > itemsPerPage\">\r\n        <ul class=\"pagination\">\r\n            <li class=\"page-pre\" ng-if=\"page === 1\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page - 1)\">‹</a>\r\n            </li>\r\n            <li class=\"page-number\" ng-repeat=\"page in pages track by $index\" ng-class=\"{active: page.active, disabled: page.disabled}\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page.number)\">{{page.text}}</a>\r\n            </li>\r\n            <li class=\"page-nex\" ng-if=\"page === totalPages\">\r\n                <a style=\"cursor:pointer;\" ng-click=\"selectPage(page + 1)\">›</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/* injects from baggage-loader */
+	__webpack_require__(9);
+
+	module.exports = function () {
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            btnTxt: '=btnTxt',
+	            isOpen: '=?'
+	        },
+	        transclude: true,
+	        templateUrl: __webpack_require__(9),
+	        link: function link(scope, element, attr, ctrl) {
+	            //// WAI-ARIA
+	            //element.attr({ 'aria-haspopup': true, 'aria-expanded': false });
+	            //scope.$watch('isOpen', function (isOpen) {
+	            //    element.attr('aria-expanded', !!isOpen);
+	            //});
+	        }
+	    };
+	};
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	var path = 'src/components/btDropdown.html';
+	var html = "<span class=\"btn-group dropup dropdown\" ng-class=\"{ 'open': isOpen }\">\r\n    <button type=\"button\" ng-click=\"isOpen=!isOpen\" class=\"btn btn-default dropdown-toggle\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n        <span>{{ btnTxt }}</span>\r\n        <span class=\"caret\"></span>\r\n    </button>\r\n    <ul class=\"dropdown-menu\" ng-show=\"isOpen\" ng-transclude>\r\n    </ul>\r\n</span>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/* injects from baggage-loader */
+	__webpack_require__(11);
+
+	module.exports = function () {
+	    return {
+	        restrict: 'E',
+	        replace: true,
+	        scope: {
+	            columns: '='
+	        },
+	        templateUrl: __webpack_require__(11),
+	        link: function link(scope) {
+	            // if (angular.isArray(scope.columns)) {
+	            //     angular.forEach(scope.columns, function (col) {
+	            //         if (!col.hasOwnProperty('visible')) {
+	            //             col.visible = true
+	            //         }
+	            //     })
+	            // }
+	        }
+	    };
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	var path = 'src/components/btShowColumns.html';
+	var html = "<div class=\"keep-open btn-group\" uib-dropdown auto-close=\"outsideClick\">\r\n    <button type=\"button\" class=\"btn btn-default dropdown-toggle\" uib-dropdown-toggle>\r\n        <i class=\"glyphicon glyphicon-th icon-th\">\r\n        </i>\r\n        <span class=\"caret\">\r\n        </span>\r\n    </button>\r\n    <ul class=\"dropdown-menu\" uib-dropdown-menu aria-labelledby=\"simple-dropdown\">\r\n        <li ng-repeat=\"col in columns\">\r\n            <label>\r\n                <input type=\"checkbox\" ng-model=\"col.visible\">\r\n                {{col.title}}\r\n            </label>\r\n        </li>\r\n    </ul>\r\n</div>";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
@@ -701,11 +676,10 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
+	/* injects from baggage-loader */
+	__webpack_require__(13);
 
-	exports.default = function () {
+	module.exports = function () {
 	    return {
 	        scope: {
 	            caption: '@?',
@@ -742,9 +716,6 @@
 	        }
 	    };
 	};
-
-	/* injects from baggage-loader */
-	__webpack_require__(13);
 
 /***/ },
 /* 13 */

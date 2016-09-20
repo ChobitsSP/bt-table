@@ -1,11 +1,11 @@
-﻿export default function () {
+﻿module.exports = function () {
     return {
         restrict: 'E',
         replace: true,
         scope: {
             columns: '='
         },
-        templateUrl: require('./bt-show-columns.html'),
+        templateUrl: require('./btShowColumns.html'),
         link: function (scope) {
             // if (angular.isArray(scope.columns)) {
             //     angular.forEach(scope.columns, function (col) {

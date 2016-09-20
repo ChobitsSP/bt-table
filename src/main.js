@@ -1,14 +1,10 @@
-﻿import btCol from 'components/bt-col'
-import btDropdown from 'components/bt-dropdown'
-import btShowColumns from 'components/bt-show-columns'
-
-require('src/bt-table.js')
+﻿require('src/bt-table.js')
 
 let app = angular.module('bt-table')
 
-app.directive('btCol', btCol)
-app.directive('btDropdown', btDropdown)
-app.directive('btShowColumns', btShowColumns)
-
+app.directive('btCol', require('components/btCol'))
 app.directive('btPager', require('components/btPager'))
+app.directive('btDropdown', require('components/btDropdown'))
+app.directive('btShowColumns', require('components/btShowColumns'))
+
 app.directive('btColSort', require('components/btColSort'))

@@ -1,4 +1,4 @@
-export default function () {
+module.exports = function () {
     return {
         restrict: 'E',
         scope: {
@@ -6,7 +6,7 @@ export default function () {
             isOpen: '=?',
         },
         transclude: true,
-        templateUrl: require('./bt-dropdown.html'),
+        templateUrl: require('./btDropdown.html'),
         link: function (scope, element, attr, ctrl) {
             //// WAI-ARIA
             //element.attr({ 'aria-haspopup': true, 'aria-expanded': false });
