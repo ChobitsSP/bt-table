@@ -4,7 +4,7 @@ module.exports = function () {
     return {
         restrict: 'E',
         scope: {
-            btnTxt: '=btnTxt',
+            text: '=text',
             show: '=?',
         },
         transclude: true,

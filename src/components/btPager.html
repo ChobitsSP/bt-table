@@ -4,7 +4,7 @@
         <span class="pagination-info">显示第 {{(page - 1) * itemsPerPage + 1}} 到第 {{getCurrentCount()}} 条记录，总共 {{totalItems}} 条记录</span>
         <span class="page-list">
             每页显示
-            <bt-dropdown btn-txt="itemsPerPage" show="isOpen">
+            <bt-dropdown text="itemsPerPage" show="isOpen">
                 <li ng-class="{ active: itemsPerPage == size }" ng-repeat="size in [10,25,50,100] track by $index">
                     <a ng-click="setPageSize(size)">{{::size}}</a>
                 </li>
