@@ -1,11 +1,11 @@
-﻿<div class="keep-open btn-group" uib-dropdown auto-close="outsideClick">
-    <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+﻿<div class="keep-open btn-group" ng-class="{ open: show }">
+    <button type="button" class="btn btn-default dropdown-toggle" ng-click="show=!show">
         <i class="glyphicon glyphicon-th icon-th">
         </i>
         <span class="caret">
         </span>
     </button>
-    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+    <ul class="dropdown-menu" ng-show="show" aria-labelledby="simple-dropdown">
         <li ng-repeat="col in columns">
             <label>
                 <input type="checkbox" ng-model="col.visible">
