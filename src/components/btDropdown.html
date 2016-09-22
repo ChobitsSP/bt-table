@@ -1,8 +1,8 @@
-<span class="btn-group dropup dropdown" ng-class="{ 'open': isOpen }">
-    <button type="button" ng-click="isOpen=!isOpen" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="true">
+<div class="btn-group dropup dropdown" ng-class="{ 'open': show }">
+    <button type="button" ng-click="show=!show" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="true">
         <span>{{ btnTxt }}</span>
         <span class="caret"></span>
     </button>
-    <ul class="dropdown-menu" ng-show="isOpen" ng-transclude>
+    <ul class="dropdown-menu" ng-show="show" ng-transclude>
     </ul>
-</span>
+</div>
