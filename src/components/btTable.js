@@ -63,7 +63,7 @@ module.exports = function () {
     return {
         restrict: 'E',
         replace: true,
-        //transclude: true,
+        transclude: true,
         scope: {
             columns: '=',
             items: '=rows',

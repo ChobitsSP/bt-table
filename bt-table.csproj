@@ -49,6 +49,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="build\build.js" />
+    <Content Include="build\dev-server.js" />
     <Content Include="dist\bt-table.js" />
     <Content Include="dist\bt-table.min.js" />
     <Content Include="package.json" />
