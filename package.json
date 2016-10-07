@@ -27,7 +27,7 @@
   },
   "scripts": {
     "dev": "node build/dev-server.js",
-    "build": "webpack && gulp",
+    "build": "node build/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
