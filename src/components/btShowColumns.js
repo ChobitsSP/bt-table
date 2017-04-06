@@ -1,4 +1,4 @@
-﻿import $ from 'utils/NodeList.js'
+﻿import $ from '@utils/NodeList.js'
 
 export default function () {
     return {

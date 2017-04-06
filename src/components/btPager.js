@@ -1,4 +1,4 @@
-﻿import PagerHelper from 'utils/PagerHelper'
+﻿import PagerHelper from '@utils/PagerHelper'
 
 let paginationConfig = {
     itemsPerPage: 10,
