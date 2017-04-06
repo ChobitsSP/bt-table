@@ -49,6 +49,10 @@
     <Content Include="build\webpack.base.conf.js" />
     <Content Include="build\webpack.dev.conf.js" />
     <Content Include="build\webpack.prod.conf.js" />
+    <Content Include="config\dev.env.js" />
+    <Content Include="config\index.js" />
+    <Content Include="config\prod.env.js" />
+    <Content Include="config\test.env.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\components\btColSort.html" />

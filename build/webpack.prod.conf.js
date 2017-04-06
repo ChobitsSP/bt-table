@@ -23,8 +23,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     },
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     output: {
-        filename: utils.assetsPath('js/bt-table.js'),
-        chunkFilename: utils.assetsPath('js/bt-table.js')
+        filename: utils.assetsPath('bt-table.js'),
+        chunkFilename: utils.assetsPath('bt-table.js')
         //filename: utils.assetsPath('js/[name].[chunkhash].js'),
         //chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
@@ -87,14 +87,14 @@ var webpackConfig = merge(baseWebpackConfig, {
       //   name: 'manifest',
       //   chunks: ['vendor']
       // }),
-      // copy custom static assets
-      new CopyWebpackPlugin([
-        {
-            from: path.resolve(__dirname, '../static'),
-            to: config.build.assetsSubDirectory,
-            ignore: ['.*']
-        }
-      ])
+      //// copy custom static assets
+      //new CopyWebpackPlugin([
+      //  {
+      //      from: path.resolve(__dirname, '../static'),
+      //      to: config.build.assetsSubDirectory,
+      //      ignore: ['.*']
+      //  }
+      //])
     ]
 })
 
