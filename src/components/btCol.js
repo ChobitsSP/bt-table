@@ -1,11 +1,13 @@
-﻿export default function () {
+﻿import template from './btCol.html'
+
+export default function () {
     return {
         restrict: 'A',
         scope: {
             column: '=btCol',
             pager: '=?',
         },
-        templateUrl: require('./btCol.html'),
+        template: template,
         link: function (scope, element, attr, ctrl) {
             scope.sort_class = '';
 

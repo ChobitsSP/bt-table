@@ -1,4 +1,5 @@
 import $ from '@utils/NodeList.js'
+import template from './btDropdown.html'
 
 export default function () {
     return {
@@ -8,7 +9,7 @@ export default function () {
             show: '=?',
         },
         transclude: true,
-        templateUrl: require('./btDropdown.html'),
+        template: template,
         link: function (scope, element, attr, ctrl) {
             const $el = $(element[0])
             $el.onBlur((e) => { 

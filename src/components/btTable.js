@@ -1,4 +1,5 @@
-﻿
+﻿import template from './btTable.html'
+
 let controller = ['$scope', function ($scope) {
 
     $scope.config = angular.extend({}, $scope.config)
@@ -77,7 +78,7 @@ export default function () {
             checkChange: '&?',
             allCheckChange: '&?',
         },
-        templateUrl: require('./btTable.html'),
+        template: template,
         controller: controller,
         link: function (scope, element, attr, ctrl) {
             if (angular.isArray(scope.columns)) {

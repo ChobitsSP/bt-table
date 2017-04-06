@@ -1,4 +1,5 @@
 ﻿import PagerHelper from '@utils/PagerHelper'
+import template from './btPager.html'
 
 let paginationConfig = {
     itemsPerPage: 10,
@@ -121,7 +122,7 @@ export default ['$parse', function ($parse) {
         },
         require: ['btPager', '?ngModel'],
         controller: controller,
-        templateUrl: require('./btPager.html'),
+        template: template,
         replace: true,
         link: function (scope, element, attrs, ctrls) {
             scope.isOpen = false;

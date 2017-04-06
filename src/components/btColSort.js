@@ -1,4 +1,6 @@
-﻿export default function () {
+﻿import template from './btColSort.html'
+
+export default function () {
     return {
         scope: {
             caption: '@?',
@@ -6,7 +8,7 @@
             sortable: '=?',
         },
         restrict: 'A',
-        templateUrl: require('./btColSort.html'),
+        template: template,
         link: function (scope, element, attr, ctrl) {
 
             scope.is_sortable = !!scope.sortable;

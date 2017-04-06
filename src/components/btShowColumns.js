@@ -1,4 +1,5 @@
 ﻿import $ from '@utils/NodeList.js'
+import template from './btShowColumns.html'
 
 export default function () {
     return {
@@ -8,7 +9,7 @@ export default function () {
             show: '=?',
             columns: '='
         },
-        templateUrl: require('./btShowColumns.html'),
+        template: template,
         link: function (scope, element) {
             scope.show = false
 
