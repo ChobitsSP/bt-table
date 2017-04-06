@@ -1,4 +1,4 @@
-var gulp = require('gulp'),
+let gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     webpack = require('gulp-webpack'),
     uglify = require('gulp-uglify'),

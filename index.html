@@ -51,7 +51,7 @@
 </html>
 
 <script>
-    var app = angular.module('app', ['bt-table'])
+    let app = angular.module('app', ['bt-table'])
 
     app.controller('ctrl', function ($scope, $http, $filter, $window, $timeout) {
 
@@ -136,7 +136,7 @@
 
             $scope.loading = true
 
-            var post_data = {
+            let post_data = {
                 sort: $scope.pager.sort_name + '|' + ($scope.pager.is_desc ? 'desc' : 'asc'),
                 page: $scope.pager.page_no,
                 per_page: $scope.pager.page_size,

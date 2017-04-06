@@ -10,7 +10,7 @@
         template: '<input type="checkbox" ng-model="master" ng-change="masterChange()">',
         controller: ['$scope', '$element', function ($scope, $element) {
 
-            var select_field = $scope.selectField || 'isSelected';
+            let select_field = $scope.selectField || 'isSelected';
 
             $scope.masterChange = function () {
                 if ($scope.master) {
@@ -33,7 +33,7 @@
             })
 
             function check_change() {
-                var allSet = true, allClear = true;
+                let allSet = true, allClear = true;
                 angular.forEach($scope.checkboxes, function (cb, index) {
                     if (cb[select_field]) {
                         allClear = false;

@@ -15,7 +15,7 @@ let paginationConfig = {
 }
 
 let controller = ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
-    var self = this,
+    let self = this,
         ngModelCtrl = { $setViewValue: angular.noop }, // nullModelCtrl
         setNumPages = $attrs.numPages ? $parse($attrs.numPages).assign : angular.noop;
 
@@ -38,7 +38,7 @@ let controller = ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $a
     };
 
     this.calculateTotalPages = function () {
-        var totalPages = $scope.itemsPerPage < 1 ? 1 : Math.ceil($scope.totalItems / $scope.itemsPerPage);
+        let totalPages = $scope.itemsPerPage < 1 ? 1 : Math.ceil($scope.totalItems / $scope.itemsPerPage);
         return Math.max(totalPages || 0, 1);
     };
 
@@ -79,7 +79,7 @@ let controller = ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $a
         $scope.totalPages = self.calculateTotalPages()
     })
 
-    var change_state = 0
+    let change_state = 0
 
     $scope.$watch('totalPages', function (value, oldValue) {
         setNumPages($scope.$parent, value); // Readonly variable
@@ -127,19 +127,19 @@ export default ['$parse', function ($parse) {
         link: function (scope, element, attrs, ctrls) {
             scope.isOpen = false;
 
-            var paginationCtrl = ctrls[0], ngModelCtrl = ctrls[1];
+            let paginationCtrl = ctrls[0], ngModelCtrl = ctrls[1];
 
             if (!ngModelCtrl) {
                 return; // do nothing if no ng-model
             }
             
             // Setup configuration parameters
-            var maxSize = angular.isDefined(attrs.maxSize) ? scope.$parent.$eval(attrs.maxSize) : paginationConfig.maxSize,
+            let maxSize = angular.isDefined(attrs.maxSize) ? scope.$parent.$eval(attrs.maxSize) : paginationConfig.maxSize,
                 rotate = angular.isDefined(attrs.rotate) ? scope.$parent.$eval(attrs.rotate) : paginationConfig.rotate;
             scope.boundaryLinks = angular.isDefined(attrs.boundaryLinks) ? scope.$parent.$eval(attrs.boundaryLinks) : paginationConfig.boundaryLinks;
             scope.directionLinks = angular.isDefined(attrs.directionLinks) ? scope.$parent.$eval(attrs.directionLinks) : paginationConfig.directionLinks;
 
-            var num_display_entries = angular.isDefined(attrs.numDisplayEntries) ? scope.$parent.$eval(attrs.numDisplayEntries) : paginationConfig.numDisplayEntries,
+            let num_display_entries = angular.isDefined(attrs.numDisplayEntries) ? scope.$parent.$eval(attrs.numDisplayEntries) : paginationConfig.numDisplayEntries,
                 num_edge_entries = angular.isDefined(attrs.numEdgeEntries) ? scope.$parent.$eval(attrs.numEdgeEntries) : paginationConfig.numEdgeEntries;
             
             let helper = new PagerHelper(num_display_entries, num_edge_entries);
@@ -153,7 +153,7 @@ export default ['$parse', function ($parse) {
                 });
             }
 
-            var originalRender = paginationCtrl.render;
+            let originalRender = paginationCtrl.render;
             paginationCtrl.render = function () {
                 originalRender();
                 if (scope.page > 0 && scope.page <= scope.totalPages) {
