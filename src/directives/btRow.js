@@ -16,10 +16,12 @@
                 templateStr = formatter(scope.item, scope.rowIndex);
             }
             else {
-                templateStr = formatter || '<span ng-bind="item.' + scope.column.field + '"></span>';
+                templateStr = formatter || `<span ng-bind="item.${scope.column.field}"></span>`
             }
+
             let div = angular.element(templateStr)
             $compile(div)(scope)
+
             let td = angular.element(element[0])
             td.append(div)
 

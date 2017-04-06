@@ -26,6 +26,13 @@ if(window.angular) {
 }
 else {
     window.BtTable = {
-        
+        btTable: btTable,
+        btCol: btCol,
+        btPager: btPager,
+        btDropdown: btDropdown,
+        btShowColumns: btShowColumns,
+        btColSort: btColSort,
+        btRow: btRow,
+        checkboxAll: checkboxAll
     }
 }
