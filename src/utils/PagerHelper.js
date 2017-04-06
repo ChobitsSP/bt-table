@@ -66,4 +66,4 @@ function makePage(number, text, isActive) {
     };
 }
 
-module.exports = PagerHelper;
+export default PagerHelper;

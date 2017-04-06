@@ -1,6 +1,6 @@
 ﻿import $ from 'utils/NodeList.js'
 
-module.exports = function () {
+export default function () {
     return {
         restrict: 'E',
         replace: true,

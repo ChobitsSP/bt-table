@@ -46,25 +46,99 @@
 
 	'use strict';
 
+	var _btTable = __webpack_require__(1);
+
+	var _btTable2 = _interopRequireDefault(_btTable);
+
+	var _btCol = __webpack_require__(3);
+
+	var _btCol2 = _interopRequireDefault(_btCol);
+
+	var _btPager = __webpack_require__(5);
+
+	var _btPager2 = _interopRequireDefault(_btPager);
+
+	var _btDropdown = __webpack_require__(8);
+
+	var _btDropdown2 = _interopRequireDefault(_btDropdown);
+
+	var _btShowColumns = __webpack_require__(11);
+
+	var _btShowColumns2 = _interopRequireDefault(_btShowColumns);
+
+	var _btColSort = __webpack_require__(13);
+
+	var _btColSort2 = _interopRequireDefault(_btColSort);
+
+	var _btRow = __webpack_require__(15);
+
+	var _btRow2 = _interopRequireDefault(_btRow);
+
+	var _checkboxAll = __webpack_require__(16);
+
+	var _checkboxAll2 = _interopRequireDefault(_checkboxAll);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	/* injects from baggage-loader */
 
-	var app = angular.module('bt-table', []);
+	if (window.angular) {
+	    var app = angular.module('bt-table', []);
 
-	app.directive('btTable', __webpack_require__(1));
-	app.directive('btCol', __webpack_require__(3));
-	app.directive('btPager', __webpack_require__(5));
-	app.directive('btDropdown', __webpack_require__(8));
-	app.directive('btShowColumns', __webpack_require__(11));
-	app.directive('btColSort', __webpack_require__(13));
+	    app.directive('btTable', __webpack_require__(1));
+	    app.directive('btCol', __webpack_require__(3));
+	    app.directive('btPager', __webpack_require__(5));
+	    app.directive('btDropdown', __webpack_require__(8));
+	    app.directive('btShowColumns', __webpack_require__(11));
+	    app.directive('btColSort', __webpack_require__(13));
 
-	app.directive('btRow', __webpack_require__(15));
-	app.directive('checkboxAll', __webpack_require__(16));
+	    app.directive('btRow', __webpack_require__(15));
+	    app.directive('checkboxAll', __webpack_require__(16));
+	} else {
+	    window.BtTable = {};
+	}
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function () {
+	    return {
+	        restrict: 'E',
+	        replace: true,
+	        transclude: true,
+	        scope: {
+	            columns: '=',
+	            items: '=rows',
+	            pager: '=',
+	            config: '=?',
+	            loading: '=?',
+	            refresh: '&?',
+	            rowClick: '&?',
+	            pageChanged: '&?',
+	            cellCallback: '&?',
+	            checkChange: '&?',
+	            allCheckChange: '&?'
+	        },
+	        templateUrl: __webpack_require__(2),
+	        controller: controller,
+	        link: function link(scope, element, attr, ctrl) {
+	            if (angular.isArray(scope.columns)) {
+	                angular.forEach(scope.columns, function (col) {
+	                    if (!col.hasOwnProperty('visible')) {
+	                        col.visible = true;
+	                    }
+	                });
+	            }
+	        }
+	    };
+	};
 
 	/* injects from baggage-loader */
 	__webpack_require__(2);
@@ -129,38 +203,6 @@
 	    };
 	}];
 
-	module.exports = function () {
-	    return {
-	        restrict: 'E',
-	        replace: true,
-	        transclude: true,
-	        scope: {
-	            columns: '=',
-	            items: '=rows',
-	            pager: '=',
-	            config: '=?',
-	            loading: '=?',
-	            refresh: '&?',
-	            rowClick: '&?',
-	            pageChanged: '&?',
-	            cellCallback: '&?',
-	            checkChange: '&?',
-	            allCheckChange: '&?'
-	        },
-	        templateUrl: __webpack_require__(2),
-	        controller: controller,
-	        link: function link(scope, element, attr, ctrl) {
-	            if (angular.isArray(scope.columns)) {
-	                angular.forEach(scope.columns, function (col) {
-	                    if (!col.hasOwnProperty('visible')) {
-	                        col.visible = true;
-	                    }
-	                });
-	            }
-	        }
-	    };
-	};
-
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
@@ -176,10 +218,11 @@
 
 	'use strict';
 
-	/* injects from baggage-loader */
-	__webpack_require__(4);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-	module.exports = function () {
+	exports.default = function () {
 	    return {
 	        restrict: 'A',
 	        scope: {
@@ -215,6 +258,9 @@
 	    };
 	};
 
+	/* injects from baggage-loader */
+	__webpack_require__(4);
+
 /***/ },
 /* 4 */
 /***/ function(module, exports) {
@@ -229,6 +275,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
 	var _PagerHelper = __webpack_require__(6);
 
@@ -346,7 +396,7 @@
 	    };
 	}];
 
-	module.exports = ['$parse', function ($parse) {
+	exports.default = ['$parse', function ($parse) {
 	    return {
 	        restrict: 'EA',
 	        scope: {
@@ -408,6 +458,10 @@
 /***/ function(module, exports) {
 
 	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
 	/* injects from baggage-loader */
 
@@ -479,7 +533,7 @@
 	    };
 	}
 
-	module.exports = PagerHelper;
+	exports.default = PagerHelper;
 
 /***/ },
 /* 7 */
@@ -496,16 +550,11 @@
 
 	'use strict';
 
-	var _NodeList = __webpack_require__(9);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-	var _NodeList2 = _interopRequireDefault(_NodeList);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/* injects from baggage-loader */
-	__webpack_require__(10);
-
-	module.exports = function () {
+	exports.default = function () {
 	    return {
 	        restrict: 'E',
 	        scope: {
@@ -513,7 +562,7 @@
 	            show: '=?'
 	        },
 	        transclude: true,
-	        templateUrl: __webpack_require__(10),
+	        templateUrl: __webpack_require__(9),
 	        link: function link(scope, element, attr, ctrl) {
 	            var $el = (0, _NodeList2.default)(element[0]);
 	            $el.onBlur(function (e) {
@@ -529,8 +578,26 @@
 	    };
 	};
 
+	var _NodeList = __webpack_require__(10);
+
+	var _NodeList2 = _interopRequireDefault(_NodeList);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/* injects from baggage-loader */
+	__webpack_require__(9);
+
 /***/ },
 /* 9 */
+/***/ function(module, exports) {
+
+	var path = 'src/components/btDropdown.html';
+	var html = "<div class=\"btn-group dropup dropdown\" ng-class=\"{ open: show }\">\r\n    <button type=\"button\" ng-click=\"show=!show\" class=\"btn btn-default dropdown-toggle\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n        <span>{{ text }}</span>\r\n        <span class=\"caret\"></span>\r\n    </button>\r\n    <ul class=\"dropdown-menu\" ng-show=\"show\" ng-transclude>\r\n    </ul>\r\n</div>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1542,30 +1609,16 @@
 	exports.default = NodeListJS;
 
 /***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	var path = 'src/components/btDropdown.html';
-	var html = "<div class=\"btn-group dropup dropdown\" ng-class=\"{ open: show }\">\r\n    <button type=\"button\" ng-click=\"show=!show\" class=\"btn btn-default dropdown-toggle\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n        <span>{{ text }}</span>\r\n        <span class=\"caret\"></span>\r\n    </button>\r\n    <ul class=\"dropdown-menu\" ng-show=\"show\" ng-transclude>\r\n    </ul>\r\n</div>";
-	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
-	module.exports = path;
-
-/***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _NodeList = __webpack_require__(9);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-	var _NodeList2 = _interopRequireDefault(_NodeList);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/* injects from baggage-loader */
-	__webpack_require__(12);
-
-	module.exports = function () {
+	exports.default = function () {
 	    return {
 	        restrict: 'E',
 	        replace: true,
@@ -1594,6 +1647,15 @@
 	    };
 	};
 
+	var _NodeList = __webpack_require__(10);
+
+	var _NodeList2 = _interopRequireDefault(_NodeList);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/* injects from baggage-loader */
+	__webpack_require__(12);
+
 /***/ },
 /* 12 */
 /***/ function(module, exports) {
@@ -1609,10 +1671,11 @@
 
 	'use strict';
 
-	/* injects from baggage-loader */
-	__webpack_require__(14);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-	module.exports = function () {
+	exports.default = function () {
 	    return {
 	        scope: {
 	            caption: '@?',
@@ -1650,6 +1713,9 @@
 	    };
 	};
 
+	/* injects from baggage-loader */
+	__webpack_require__(14);
+
 /***/ },
 /* 14 */
 /***/ function(module, exports) {
@@ -1665,9 +1731,13 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	/* injects from baggage-loader */
 
-	module.exports = ['$compile', function ($compile) {
+	exports.default = ['$compile', function ($compile) {
 	    return {
 	        restrict: 'A',
 	        scope: {
@@ -1706,9 +1776,11 @@
 
 	'use strict';
 
-	/* injects from baggage-loader */
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-	module.exports = function () {
+	exports.default = function () {
 	    return {
 	        replace: true,
 	        restrict: 'E',

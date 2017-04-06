@@ -107,7 +107,7 @@ let controller = ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $a
     };
 }]
 
-module.exports = ['$parse', function ($parse) {
+export default ['$parse', function ($parse) {
     return {
         restrict: 'EA',
         scope: {

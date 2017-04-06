@@ -1,4 +1,4 @@
-﻿module.exports = ['$compile', function ($compile) {
+﻿export default ['$compile', function ($compile) {
     return {
         restrict: 'A',
         scope: {

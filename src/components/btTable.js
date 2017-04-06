@@ -59,7 +59,7 @@ let controller = ['$scope', function ($scope) {
     }
 }]
 
-module.exports = function () {
+export default function () {
     return {
         restrict: 'E',
         replace: true,
