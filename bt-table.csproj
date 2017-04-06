@@ -53,6 +53,7 @@
     <Content Include="config\index.js" />
     <Content Include="config\prod.env.js" />
     <Content Include="config\test.env.js" />
+    <Content Include="dist\bt-table.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\components\btColSort.html" />
@@ -81,7 +82,6 @@
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="dist\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +91,9 @@
     <Content Include=".babelrc" />
     <Content Include=".editorconfig" />
     <Content Include="static\.gitkeep" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dist\bt-table.js.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
