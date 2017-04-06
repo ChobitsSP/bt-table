@@ -62,7 +62,7 @@ let controller = ['$scope', function ($scope) {
 
 export default function () {
     return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         transclude: true,
         scope: {

@@ -3,7 +3,7 @@ import template from './btDropdown.html'
 
 export default function () {
     return {
-        restrict: 'E',
+        restrict: 'EA',
         scope: {
             text: '=text',
             show: '=?',

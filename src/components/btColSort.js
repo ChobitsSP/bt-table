@@ -7,7 +7,7 @@ export default function () {
             fieldName: '@?',
             sortable: '=?',
         },
-        restrict: 'A',
+        restrict: 'EA',
         template: template,
         link: function (scope, element, attr, ctrl) {
 

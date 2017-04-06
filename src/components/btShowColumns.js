@@ -3,7 +3,7 @@ import template from './btShowColumns.html'
 
 export default function () {
     return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         scope: {
             show: '=?',

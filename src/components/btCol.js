@@ -2,7 +2,7 @@
 
 export default function () {
     return {
-        restrict: 'A',
+        restrict: 'EA',
         scope: {
             column: '=btCol',
             pager: '=?',
