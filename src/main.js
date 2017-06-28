@@ -8,10 +8,7 @@ import btColSort from '@components/btColSort';
 import btRow from '@directives/btRow';
 import checkboxAll from '@directives/checkboxAll';
 
-import './dev/ajax'
-
-import Vue from 'vue'
-import App from './App'
+import TableServer from '@/dev/TableServer';
 
 if(window.angular) {
     let app = angular.module('bt-table', [])
@@ -25,6 +22,8 @@ if(window.angular) {
 
     app.directive('btRow', btRow)
     app.directive('checkboxAll', checkboxAll)
+
+    angular.module('app', ['bt-table']).directive('tableServer', TableServer)
 }
 else {
     window.BtTable = {

@@ -1,7 +1,7 @@
-﻿let app = angular.module('app', ['bt-table'])
+﻿import template from './TableServer.html'
+import ajax from './ajax.js'
 
-app.controller('ctrl', function ($scope, $http, $filter, $window, $timeout) {
-
+function controller($scope, $http, $filter, $window, $timeout) {
     $scope.config = {
         checkbox: true,
     }
@@ -134,4 +134,16 @@ app.controller('ctrl', function ($scope, $http, $filter, $window, $timeout) {
         $scope.items.forEach(t => t.$radio = false)
         item.$radio = true
     }
-})
+}
+
+export default function () {
+    return {
+        restrict: 'EA',
+        replace: true,
+        scope: {
+
+        },
+        template: template,
+        controller: controller,
+    }
+}

@@ -14,7 +14,7 @@ function getPaginatedItems(items, page, per_page) {
     return _.chain(items).slice(offset).take(per_page).value()
 }
 
-window.ajax = function (params) {
+export default function (params) {
     return new Promise(function (reject) {
         setTimeout(function () {
             let data = QueryData(params)
