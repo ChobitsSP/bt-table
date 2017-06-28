@@ -60,6 +60,7 @@
     <Content Include="src\components\btColSort.js" />
     <Content Include="src\components\btTable.html" />
     <Content Include="src\components\btTable.js" />
+    <Content Include="src\dev\ajax.js" />
     <Content Include="src\directives\btRow.js" />
     <Content Include="src\directives\checkboxAll.js" />
     <Content Include="src\main.js" />
@@ -79,6 +80,7 @@
     <Content Include="src\components\btPager.js" />
     <Content Include="src\components\btShowColumns.html" />
     <Content Include="src\components\btShowColumns.js" />
+    <Content Include="static\app.js" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dist\bt-table.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\dev\data.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -3,7 +3,7 @@
     </div>
     <div class="fixed-table-container">
         <div class="fixed-table-body">
-            <table class="table table-striped table-hover table-bordered dataTable no-footer" ng-cloak>
+            <table class="table table-bordered dataTable no-footer" ng-cloak>
                 <thead>
                     <tr role="row">
                         <th class="bs-checkbox" style="text-align: center; vertical-align: middle; width: 36px; " ng-if="config.checkbox">
@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody ng-show="!loading" ng-cloak>
-                    <tr ng-repeat="item in items track by $index" ng-class="{{item.$row_class}}" ng-click="row_click(item, $index)">
+                    <tr ng-repeat="item in items track by $index" ng-class="item.$row_class" ng-click="row_click(item, $index)">
                         <td class="bs-checkbox" ng-if="config.checkbox">
                             <input type="checkbox" ng-model="item.$checked" ng-click="$event.stopPropagation();check_change(item)" class="checkbox" />
                         </td>

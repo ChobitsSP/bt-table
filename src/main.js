@@ -8,6 +8,8 @@ import btColSort from '@components/btColSort';
 import btRow from '@directives/btRow';
 import checkboxAll from '@directives/checkboxAll';
 
+import './dev/ajax'
+
 import Vue from 'vue'
 import App from './App'
 
