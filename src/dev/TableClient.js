@@ -3,6 +3,12 @@ import json_data from './data.json'
 
 import * as AjaxUtils from './ajax.js'
 
+const ALL_DATA = angular.copy(json_data)
+
+ALL_DATA.forEach(t => {
+    t.$row_class = { red: t.id % 2 === 1 }
+})
+
 function controller($scope, $http, $filter, $window, $timeout) {
     $scope.config = {
         checkbox: true,
@@ -70,11 +76,7 @@ function controller($scope, $http, $filter, $window, $timeout) {
         }
     ]
 
-    $scope.all_items = angular.copy(json_data);
-
-    $scope.all_items.forEach(t => {
-        t.$row_class = { red: t.id % 2 === 1 }
-    })
+    $scope.all_items = ALL_DATA;
 
     $scope.items = [];
 
@@ -115,7 +117,9 @@ function controller($scope, $http, $filter, $window, $timeout) {
     }
 
     $scope.text_filter = function (searchText) {
-        $scope.rows = $filter('filter')($scope.items, searchText)
+        $scope.all_items = $filter('filter')(ALL_DATA, searchText)
+        $scope.pager.page_no = 1
+        $scope.pageChanged()
     }
 
     $scope.radio_click = function (item) {
