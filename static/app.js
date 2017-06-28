@@ -17,7 +17,8 @@ app.controller('ctrl', function ($scope, $http, $filter, $window, $timeout) {
         {
             title: 'class',
             field: '$row_class',
-            sortable: true,
+            formatter: '<span>{{ item.$row_class | json }}</span>',
+            sortable: false,
         },
         {
             title: 'id',
@@ -52,24 +53,24 @@ app.controller('ctrl', function ($scope, $http, $filter, $window, $timeout) {
         {
             title: 'created_at',
             field: 'created_at',
-            formatter: '<span>{{item.created_at | date : "yyyy-MM-dd HH:mm:ss"}}</span>',
+            formatter: '<span>{{ item.created_at | date : "yyyy-MM-dd HH:mm:ss" }}</span>',
             sortable: true,
         },
         {
             title: 'updated_at',
             field: 'updated_at',
-            formatter: '<span>{{item.updated_at | date : "yyyy-MM-dd HH:mm:ss"}}</span>',
+            formatter: '<span>{{ item.updated_at | date : "yyyy-MM-dd HH:mm:ss" }}</span>',
             sortable: true,
         },
         {
             title: 'edit',
             formatter: '<div><a class="btn btn-xs btn-success" ng-click=callback("edit")>edit</a></div>',
-        },
+        }
     ]
 
     $scope.items = []
 
-    $scope.radioItem = $scope.items[1]
+    $scope.radioItem = null
 
     $scope.pager = {
         page_no: 1,
