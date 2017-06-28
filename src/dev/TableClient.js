@@ -1,5 +1,7 @@
 ﻿import template from './TableServer.html'
-import ajax from './ajax.js'
+import json_data from './data.json'
+
+import * as AjaxUtils from './ajax.js'
 
 function controller($scope, $http, $filter, $window, $timeout) {
     $scope.config = {
@@ -68,7 +70,13 @@ function controller($scope, $http, $filter, $window, $timeout) {
         }
     ]
 
-    $scope.items = []
+    $scope.all_items = angular.copy(json_data);
+
+    $scope.all_items.forEach(t => {
+        t.$row_class = { red: t.id % 2 === 1 }
+    })
+
+    $scope.items = [];
 
     $scope.radioItem = null
 
@@ -85,36 +93,16 @@ function controller($scope, $http, $filter, $window, $timeout) {
     }
 
     $scope.pageChanged = function () {
-        if ($scope.loading) return
-
-        $scope.loading = true
-
-        let post_data = {
+        const post_data = {
             sort: $scope.pager.sort_name,
             page: $scope.pager.page_no,
             per_page: $scope.pager.page_size,
             is_desc: $scope.pager.is_desc,
         }
 
-        ajax(post_data).then(rsp => {
-            $scope.pager.total_result = rsp.total
+        $scope.items = AjaxUtils.Query($scope.all_items, post_data)
 
-            rsp.data.forEach(t => {
-                if (t.id % 2 === 0) {
-                    t.$row_class = { 'red': true }
-                }
-            })
-
-            $scope.items = rsp.data
-            $scope.loading = false
-            $scope.$apply();
-        })
-
-        //$http.get('http://vuetable.ratiw.net/api/users', { params: post_data }).success(function (rsp) {
-        //    $scope.pager.total_result = rsp.total
-        //    $scope.items = rsp.data
-        //    $scope.loading = false
-        //})
+        $scope.pager.total_result = $scope.all_items.length
     }
 
     $scope.edit = function (args, item, index) {
